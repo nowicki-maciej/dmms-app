@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class CategoryService {
 
@@ -13,13 +15,18 @@ public class CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
-	public List<Category> getAllCategories() {
-		return categoryRepository.findAll();
+	public List<CategoryDto> getAllCategories() {
+		return categoryRepository.findAll().stream()
+				.map(Category::from)
+				.collect(toList());
 	}
 
-	public Category createCategory(CategoryDto categoryDto) {
+	public CategoryDto createCategory(CategoryDto categoryDto) {
 		Category category = new Category(categoryDto.getName());
-		return categoryRepository.save(category);
+		category = categoryRepository.save(category);
+		categoryDto.setId(category.getId());
+
+		return categoryDto;
 	}
 
 	public void deleteCategory(Long id) {

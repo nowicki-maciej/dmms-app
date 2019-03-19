@@ -11,21 +11,26 @@ public class AuthorService {
 		this.authorRepository = authorRepository;
 	}
 
-	public Author getAuthorById(Long id) {
-		return authorRepository.getOne(id);
+	public AuthorDto getAuthorById(Long id) {
+		Author author = authorRepository.getOne(id);
+		return AuthorDto.from(author);
 	}
 
-	public Author createAuthor(AuthorDto authorDto) {
+	public AuthorDto createAuthor(AuthorDto authorDto) {
 		Author author = new Author(authorDto.getName(), authorDto.getSurname());
-		return authorRepository.save(author);
+		author = authorRepository.save(author);
+		authorDto.setId(author.getId());
+
+		return authorDto;
 	}
 
-	public Author updateAuthor(AuthorDto authorDto) {
-		Author author = authorRepository.getOne(authorDto.getId());
+	public AuthorDto updateAuthor(Long authorId, AuthorDto authorDto) {
+		Author author = authorRepository.getOne(authorId);
 		author.setName(authorDto.getName());
 		author.setSurname(authorDto.getSurname());
 
-		return author;
+		authorDto.setId(authorId);
+		return authorDto;
 	}
 
 	public void deleteAuthor(Long id) {

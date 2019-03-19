@@ -15,18 +15,18 @@ public class AuthorController {
 	}
 
 	@GetMapping("/{authorId}")
-	public Author getAuthor(@PathVariable Long authorId) {
+	public AuthorDto getAuthor(@PathVariable Long authorId) {
 		return authorService.getAuthorById(authorId);
 	}
 
 	@PostMapping
-	public Author createAuthor(@RequestBody @Valid AuthorDto authorDto) {
+	public AuthorDto createAuthor(@RequestBody @Valid AuthorDto authorDto) {
 		return authorService.createAuthor(authorDto);
 	}
 
-	@PutMapping
-	public Author updateAuthor(@RequestBody AuthorDto authorDto) {
-		return authorService.updateAuthor(authorDto);
+	@PutMapping("/{authorId}")
+	public AuthorDto updateAuthor(@PathVariable Long authorId, @RequestBody @Valid AuthorDto authorDto) {
+		return authorService.updateAuthor(authorId, authorDto);
 	}
 
 	@DeleteMapping("/{authorId}")
