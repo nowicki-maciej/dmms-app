@@ -1,12 +1,8 @@
 package cf.dmms.app.usermanagement.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -15,23 +11,31 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @Column
     private String login;
 
-    @NotBlank
+    @JsonIgnore
+    @Column
     private String password;
 
-    @NotBlank
+    @Column
     private String displayName;
 
-    @NotBlank
-    @Email
+    @Column
     private String email;
 
-    @NotNull
+    @Column
     private Role role;
 
     public User() {
+    }
+
+    public User(String login, String password, String displayName, String email, Role role) {
+        this.login = login;
+        this.password = password;
+        this.displayName = displayName;
+        this.email = email;
+        this.role = role;
     }
 
     public Long getId() {

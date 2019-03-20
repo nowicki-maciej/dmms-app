@@ -1,8 +1,6 @@
 package cf.dmms.app.usermanagement;
 
-import cf.dmms.app.usermanagement.security.jwt.JwtAuthEntryPoint;
-import cf.dmms.app.usermanagement.security.jwt.JwtAuthenticationFilter;
-import cf.dmms.app.usermanagement.security.jwt.JwtTokenProvider;
+import cf.dmms.app.usermanagement.security.UnauthorizedHandler;
 import cf.dmms.app.usermanagement.user.principal.UserPrincipalService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,13 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserPrincipalService userPrincipalService;
-    private JwtAuthEntryPoint unauthorizedHandler;
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private UnauthorizedHandler unauthorizedHandler;
 
-    public SecurityConfig(UserPrincipalService userPrincipalService, JwtAuthEntryPoint unauthorizedHandler, JwtAuthenticationFilter authenticationFilter) {
+    public SecurityConfig(UserPrincipalService userPrincipalService, UnauthorizedHandler unauthorizedHandler) {
         this.userPrincipalService = userPrincipalService;
         this.unauthorizedHandler = unauthorizedHandler;
-        this.jwtAuthenticationFilter = authenticationFilter;
     }
 
     @Override
@@ -37,12 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(userPrincipalService)
                 .passwordEncoder(passwordEncoder());
-
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin")
-                .password("admin")
-                .roles("ADMIN");
     }
 
     @Override
@@ -52,18 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .logout()
                     .clearAuthentication(true)
+                    .logoutUrl("/user-management/logout")
                     .and()
                 .exceptionHandling()
                     .authenticationEntryPoint(unauthorizedHandler)
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/user-management/login", "/login", "/createUser")
+                    .antMatchers("/user-management/login", "/user-test-management/createUser")
                         .permitAll()
                     .anyRequest()
                         .authenticated();
 
-        http
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)

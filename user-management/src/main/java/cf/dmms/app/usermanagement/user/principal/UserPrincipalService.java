@@ -21,15 +21,7 @@ public class UserPrincipalService implements UserDetailsService {
         User user = userRepository.findByLogin(login)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found with given login"));
 
-        return UserPrincipal.of(user);
+        return new UserPrincipal(user);
     }
 
-
-    //TODO: change to user not found exception
-    public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("No user found with given id"));
-
-        return UserPrincipal.of(user);
-    }
 }
