@@ -1,4 +1,4 @@
-package cf.dmms.app.usermanagement.authentication;
+package cf.dmms.app.usermanagement.api.authentication;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

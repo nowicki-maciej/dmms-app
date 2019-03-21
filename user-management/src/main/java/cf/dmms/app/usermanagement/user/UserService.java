@@ -1,48 +1,24 @@
 package cf.dmms.app.usermanagement.user;
 
 import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
+import cf.dmms.app.usermanagement.user.dto.FullUpdateUserDto;
 import cf.dmms.app.usermanagement.user.dto.RegistrationUserDto;
-import cf.dmms.app.usermanagement.user.exception.UserNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import cf.dmms.app.usermanagement.user.dto.UpdateUserDto;
+import cf.dmms.app.usermanagement.api.exception.UserNotFoundException;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static cf.dmms.app.usermanagement.user.UserMapper.mapToBasicUserDto;
+public interface UserService {
 
-@Service
-public class UserService {
+    BasicUserDto findById(Long id) throws UserNotFoundException;
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    List<BasicUserDto> findAllUsers();
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    void updateCurrentUser(UpdateUserDto userDto) throws UserNotFoundException;
 
-    @Transactional
-    public BasicUserDto findByLogin(String login) throws UserNotFoundException{
-        User user = userRepository.findByLogin(login)
-                .orElseThrow(UserNotFoundException::new);
-        return mapToBasicUserDto(user);
-    }
+    void updateUser(FullUpdateUserDto userDto) throws UserNotFoundException;
 
-    @Transactional
-    public List<BasicUserDto> findAllUsers() {
-        List<User> users = userRepository.findAll();
+    void deleteUser(Long userId) throws UserNotFoundException;
 
-        return users.stream()
-                .map(UserMapper::mapToBasicUserDto)
-                .collect(Collectors.toList());
-    }
-
-
-    @Transactional
-    public void register(RegistrationUserDto registrationUserDto) {
-        User user = UserMapper.mapToUser(registrationUserDto, passwordEncoder);
-        userRepository.save(user);
-    }
+    void register(RegistrationUserDto registrationUserDto);
 }

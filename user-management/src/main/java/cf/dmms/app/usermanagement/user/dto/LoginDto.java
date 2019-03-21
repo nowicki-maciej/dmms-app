@@ -1,4 +1,4 @@
-package cf.dmms.app.usermanagement.authentication;
+package cf.dmms.app.usermanagement.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

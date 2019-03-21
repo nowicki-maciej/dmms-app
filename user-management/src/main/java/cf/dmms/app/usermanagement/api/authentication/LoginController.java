@@ -1,7 +1,8 @@
-package cf.dmms.app.usermanagement.authentication;
+package cf.dmms.app.usermanagement.api.authentication;
 
 import cf.dmms.app.usermanagement.user.UserRepository;
 import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
+import cf.dmms.app.usermanagement.user.dto.LoginDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
