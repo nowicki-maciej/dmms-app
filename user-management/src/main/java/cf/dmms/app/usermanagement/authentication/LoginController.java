@@ -1,5 +1,7 @@
 package cf.dmms.app.usermanagement.authentication;
 
+import cf.dmms.app.usermanagement.user.UserRepository;
+import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,23 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static cf.dmms.app.usermanagement.user.UserMapper.mapToBasicUserDto;
+
 @RestController
 @RequestMapping("/user-management")
 public class LoginController {
 
     private AuthenticationManager authenticationManager;
+    private UserRepository userRepository;
 
-    public LoginController(AuthenticationManager authenticationManager) {
+    public LoginController(AuthenticationManager authenticationManager, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
     }
 
-
-    //TODO: response?
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<BasicUserDto> login(@Valid @RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationForUser(loginDto);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok(getUserDtoFrom(loginDto.getLogin()));
     }
 
     private Authentication authenticationForUser(LoginDto loginDto) {
@@ -40,4 +44,7 @@ public class LoginController {
         );
     }
 
+    private BasicUserDto getUserDtoFrom(String login) {
+        return mapToBasicUserDto(userRepository.getOneByLogin(login));
+    }
 }
