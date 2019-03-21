@@ -10,6 +10,7 @@ public class BasicUserDto {
     private Long id;
     private String login;
     private String displayName;
+    private String email;
     private Role role;
 
     @JsonCreator
@@ -17,10 +18,12 @@ public class BasicUserDto {
             @JsonProperty("id") Long id,
             @JsonProperty("login") String login,
             @JsonProperty("diplayName") String displayName,
+            @JsonProperty("email") String email,
             @JsonProperty("role") Role role) {
         this.id = id;
         this.login = login;
         this.displayName = displayName;
+        this.email = email;
         this.role = role;
     }
 }
