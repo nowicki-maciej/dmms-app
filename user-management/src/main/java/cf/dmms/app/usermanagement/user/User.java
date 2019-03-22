@@ -11,20 +11,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String login;
 
     @JsonIgnore
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @Column
     private String displayName;
 
-    @Column
+    @Column(nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public User() {
