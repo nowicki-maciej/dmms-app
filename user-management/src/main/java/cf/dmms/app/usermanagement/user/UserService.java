@@ -1,7 +1,7 @@
 package cf.dmms.app.usermanagement.user;
 
 import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
-import cf.dmms.app.usermanagement.user.dto.FullUpdateUserDto;
+import cf.dmms.app.usermanagement.user.dto.RoleUpdateUserDto;
 import cf.dmms.app.usermanagement.user.dto.RegistrationUserDto;
 import cf.dmms.app.usermanagement.user.dto.UpdateUserDto;
 import cf.dmms.app.usermanagement.api.exception.UserNotFoundException;
@@ -16,7 +16,7 @@ public interface UserService {
 
     void updateCurrentUser(UpdateUserDto userDto) throws UserNotFoundException;
 
-    void updateUser(FullUpdateUserDto userDto) throws UserNotFoundException;
+    void updateUserRole(RoleUpdateUserDto userDto) throws UserNotFoundException;
 
     void deleteUser(Long userId) throws UserNotFoundException;
 

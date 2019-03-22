@@ -5,6 +5,8 @@ import cf.dmms.app.usermanagement.user.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.AssertTrue;
+
 public class BasicUserDto {
 
     private Long id;
@@ -26,4 +28,25 @@ public class BasicUserDto {
         this.email = email;
         this.role = role;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
 }

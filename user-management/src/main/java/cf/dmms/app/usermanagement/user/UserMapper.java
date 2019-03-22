@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserMapper {
 
-    public static BasicUserDto mapToBasicUserDto(User user) {
+    public static BasicUserDto toDto(User user) {
         return new BasicUserDto(
                 user.getId(),
                 user.getLogin(),
@@ -16,7 +16,7 @@ public class UserMapper {
         );
     }
 
-    public static User mapToUser(RegistrationUserDto userDto, PasswordEncoder encoder) {
+    public static User toEntity(RegistrationUserDto userDto, PasswordEncoder encoder) {
         return new User(
                 userDto.getLogin(),
                 encoder.encode(userDto.getPassword()),

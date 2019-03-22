@@ -4,36 +4,41 @@ import cf.dmms.app.usermanagement.user.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class RegistrationUserDto {
 
-    @NotNull
+    @NotBlank
     private String login;
 
-    @NotNull
+    @NotBlank
     private String password;
 
-    @NotNull
+    @NotBlank
     private String repeatedPassword;
 
     private String displayName;
 
-    @NotNull
+    @NotBlank
     @Email
     private String email;
 
     @NotNull
     private Role role;
 
+    @AssertTrue(message = "passwords must be the same!")
+    private boolean arePasswordsValid;
+
     @JsonCreator
     public RegistrationUserDto(
-            @JsonProperty("login") @NotNull String login,
-            @JsonProperty("password") @NotNull String password,
-            @JsonProperty("repeatedPassword") @NotNull String repeatedPassword,
+            @JsonProperty("login") @NotBlank String login,
+            @JsonProperty("password") @NotBlank String password,
+            @JsonProperty("repeatedPassword") @NotBlank String repeatedPassword,
             @JsonProperty("displayName") String displayName,
-            @JsonProperty("email") @NotNull @Email String email,
+            @JsonProperty("email") @NotBlank @Email String email,
             @JsonProperty("role") @NotNull Role role) {
         this.login = login;
         this.password = password;
@@ -65,5 +70,9 @@ public class RegistrationUserDto {
 
     public Role getRole() {
         return role;
+    }
+
+    private boolean arePasswordsValid() {
+        return password.equals(repeatedPassword);
     }
 }

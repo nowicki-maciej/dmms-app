@@ -1,19 +1,18 @@
 package cf.dmms.app.usermanagement.user;
 
 import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
-import cf.dmms.app.usermanagement.user.dto.FullUpdateUserDto;
+import cf.dmms.app.usermanagement.user.dto.RoleUpdateUserDto;
 import cf.dmms.app.usermanagement.user.dto.RegistrationUserDto;
 import cf.dmms.app.usermanagement.user.dto.UpdateUserDto;
 import cf.dmms.app.usermanagement.api.exception.UserNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static cf.dmms.app.usermanagement.user.UserMapper.mapToBasicUserDto;
+import static cf.dmms.app.usermanagement.user.UserMapper.toDto;
 
 @Service
 public class DefaultUserService implements UserService {
@@ -26,37 +25,39 @@ public class DefaultUserService implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
-    public BasicUserDto findById(Long id) throws UserNotFoundException{
+    @Override
+    public BasicUserDto findById(Long id) throws UserNotFoundException {
         User user = findUserById(id);
-        return mapToBasicUserDto(user);
+        return toDto(user);
     }
 
-    @Transactional
+    @Override
     public List<BasicUserDto> findAllUsers() {
         List<User> users = userRepository.findAll();
 
         return users.stream()
-                .map(UserMapper::mapToBasicUserDto)
+                .map(UserMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-
-    @Transactional
+    @Override
     public void register(RegistrationUserDto registrationUserDto) {
-        User user = UserMapper.mapToUser(registrationUserDto, passwordEncoder);
+        User user = UserMapper.toEntity(registrationUserDto, passwordEncoder);
         userRepository.save(user);
     }
 
-    @Transactional
-    public void updateCurrentUser(UpdateUserDto userDto) throws UserNotFoundException{
+    @Override
+    public void updateCurrentUser(UpdateUserDto userDto) throws UserNotFoundException {
         User user = findUserById(userDto.getId());
 
         Optional.ofNullable(userDto.getDisplayName())
+                .filter(DefaultUserService::notEmpty)
                 .ifPresent(user::setDisplayName);
         Optional.ofNullable(userDto.getEmail())
+                .filter(DefaultUserService::notEmpty)
                 .ifPresent(user::setEmail);
         Optional.ofNullable(userDto.getOldPassword())
+                .filter(DefaultUserService::notEmpty)
                 .filter(oldPassword -> verifyPasswords(oldPassword, user.getPassword()))
                 .ifPresent(oldPassword -> user.setPassword(userDto.getPassword()));
 
@@ -64,15 +65,9 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public void updateUser(FullUpdateUserDto userDto) throws UserNotFoundException {
+    public void updateUserRole(RoleUpdateUserDto userDto) throws UserNotFoundException {
         User user = findUserById(userDto.getId());
 
-        Optional.ofNullable(userDto.getDisplayName())
-                .ifPresent(user::setDisplayName);
-        Optional.ofNullable(userDto.getPassword())
-                .ifPresent(user::setPassword);
-        Optional.ofNullable(userDto.getEmail())
-                .ifPresent(user::setEmail);
         Optional.of(userDto.getRole())
                 .ifPresent(user::setRole);
 
@@ -93,4 +88,7 @@ public class DefaultUserService implements UserService {
         return encodedPassword.equals(passwordEncoder.encode(textPassword));
     }
 
+    private static boolean notEmpty(String s) {
+        return !s.isEmpty();
+    }
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static cf.dmms.app.usermanagement.user.UserMapper.mapToBasicUserDto;
+import static cf.dmms.app.usermanagement.user.UserMapper.toDto;
 
 @RestController
 @RequestMapping("/user-management")
@@ -46,6 +46,6 @@ public class LoginController {
     }
 
     private BasicUserDto getUserDtoFrom(String login) {
-        return mapToBasicUserDto(userRepository.getOneByLogin(login));
+        return toDto(userRepository.getOneByLogin(login));
     }
 }
