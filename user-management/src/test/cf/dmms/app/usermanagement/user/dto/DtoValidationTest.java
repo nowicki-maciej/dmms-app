@@ -1,25 +1,12 @@
 package cf.dmms.app.usermanagement.user.dto;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import javax.validation.ConstraintViolation;
-import java.util.ArrayList;
-import java.util.List;
-
 import static cf.dmms.app.usermanagement.user.Role.ADMIN;
-import static org.apache.commons.collections4.CollectionUtils.addAll;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class DtoValidationTest extends ValidationTestBase {
-
-    private List<ConstraintViolation<Object>> validationResults;
-
-    @Before
-    public void setup() {
-        validationResults = new ArrayList<>();
-    }
 
     @Test
     public void shouldValidateRegisterDtoWithFullData() {
@@ -32,8 +19,7 @@ public class DtoValidationTest extends ValidationTestBase {
                 ADMIN
         );
 
-        addAll(validationResults, validator.validate(registrationUserDto));
-        assertThat(extractMessages(validationResults))
+        assertThat(extractMessages(validator.validate(registrationUserDto)))
                 .isEmpty();
     }
 
@@ -48,8 +34,7 @@ public class DtoValidationTest extends ValidationTestBase {
                 ADMIN
         );
 
-        addAll(validationResults, validator.validate(registrationUserDto));
-        assertThat(extractMessages(validationResults))
+        assertThat(extractMessages(validator.validate(registrationUserDto)))
                 .containsExactlyInAnyOrder(BLANK_FIELD_ERROR_MESSAGE);
     }
 
@@ -64,8 +49,7 @@ public class DtoValidationTest extends ValidationTestBase {
                 ADMIN
         );
 
-        addAll(validationResults, validator.validate(registrationUserDto));
-        assertThat(extractMessages(validationResults))
+        assertThat(extractMessages(validator.validate(registrationUserDto)))
                 .containsExactlyInAnyOrder(PASSWORDS_MISMATCH_ERROR_MESSAGE, MAIL_VALIDATION_ERROR_MESSAGE);
     }
 
@@ -79,8 +63,7 @@ public class DtoValidationTest extends ValidationTestBase {
                 VALID_EMAIL
         );
 
-        addAll(validationResults, validator.validate(updateUserDto));
-        assertThat(extractMessages(validationResults))
+        assertThat(extractMessages(validator.validate(updateUserDto)))
                 .isEmpty();
     }
 
@@ -94,8 +77,7 @@ public class DtoValidationTest extends ValidationTestBase {
                 ""
         );
 
-        addAll(validationResults, validator.validate(updateUserDto));
-        assertThat(extractMessages(validationResults))
+        assertThat(extractMessages(validator.validate(updateUserDto)))
                 .isEmpty();
     }
 
@@ -109,8 +91,7 @@ public class DtoValidationTest extends ValidationTestBase {
                 VALID_EMAIL
         );
 
-        addAll(validationResults, validator.validate(updateUserDto));
-        assertThat(extractMessages(validationResults))
+        assertThat(extractMessages(validator.validate(updateUserDto)))
                 .containsExactlyInAnyOrder(PASSWORDS_MISMATCH_ERROR_MESSAGE);
     }
 
@@ -124,8 +105,7 @@ public class DtoValidationTest extends ValidationTestBase {
                 "wrong-mail"
         );
 
-        addAll(validationResults, validator.validate(updateUserDto));
-        assertThat(extractMessages(validationResults))
+        assertThat(extractMessages(validator.validate(updateUserDto)))
                 .containsExactlyInAnyOrder(MAIL_VALIDATION_ERROR_MESSAGE);
     }
 }

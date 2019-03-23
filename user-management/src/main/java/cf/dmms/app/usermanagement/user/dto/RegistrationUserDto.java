@@ -29,17 +29,17 @@ public class RegistrationUserDto {
     @NotNull
     private Role role;
 
-    @AssertTrue(message = "passwords must be the same!")
+    @AssertTrue(message = "passwords must be the same")
     private boolean arePasswordsValid;
 
     @JsonCreator
     public RegistrationUserDto(
-            @JsonProperty("login") @NotBlank String login,
-            @JsonProperty("password") @NotBlank String password,
-            @JsonProperty("repeatedPassword") @NotBlank String repeatedPassword,
+            @JsonProperty("login") String login,
+            @JsonProperty("password") String password,
+            @JsonProperty("repeatedPassword") String repeatedPassword,
             @JsonProperty("displayName") String displayName,
-            @JsonProperty("email") @NotBlank @Email String email,
-            @JsonProperty("role") @NotNull Role role) {
+            @JsonProperty("email") String email,
+            @JsonProperty("role") Role role) {
         this.login = login;
         this.password = password;
         this.repeatedPassword = repeatedPassword;
