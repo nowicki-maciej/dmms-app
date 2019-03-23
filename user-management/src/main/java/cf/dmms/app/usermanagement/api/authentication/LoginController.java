@@ -1,7 +1,8 @@
-package cf.dmms.app.usermanagement.authentication;
+package cf.dmms.app.usermanagement.api.authentication;
 
 import cf.dmms.app.usermanagement.user.UserRepository;
 import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
+import cf.dmms.app.usermanagement.user.dto.LoginDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static cf.dmms.app.usermanagement.user.UserMapper.mapToBasicUserDto;
+import static cf.dmms.app.usermanagement.user.UserMapper.toDto;
 
 @RestController
 @RequestMapping("/user-management")
@@ -45,6 +46,6 @@ public class LoginController {
     }
 
     private BasicUserDto getUserDtoFrom(String login) {
-        return mapToBasicUserDto(userRepository.getOneByLogin(login));
+        return toDto(userRepository.getOneByLogin(login));
     }
 }
