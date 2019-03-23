@@ -1,10 +1,10 @@
 package cf.dmms.app.usermanagement.user.dto;
 
-import cf.dmms.app.usermanagement.user.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
 
 import static java.util.Objects.isNull;
 
@@ -15,6 +15,8 @@ public class UpdateUserDto {
     private String password;
     private String repeatedPassword;
     private String displayName;
+
+    @Email
     private String email;
 
     @AssertTrue(message = "passwords must be the same!")
@@ -26,12 +28,13 @@ public class UpdateUserDto {
             @JsonProperty("password") String password,
             @JsonProperty("repeatedPassword") String repeatedPassword,
             @JsonProperty("displayName") String displayName,
-            @JsonProperty("email") String email) {
+            @JsonProperty("email") @Email String email) {
         this.oldPassword = oldPassword;
         this.password = password;
         this.repeatedPassword = repeatedPassword;
         this.displayName = displayName;
         this.email = email;
+        validatePasswords();
     }
 
     public Long getId() {
@@ -62,8 +65,7 @@ public class UpdateUserDto {
         return email;
     }
 
-    @AssertTrue
-    private boolean arePasswordsValid() {
-        return isNull(password) || password.equals(repeatedPassword);
+    private void validatePasswords() {
+        arePasswordsValid = isNull(password) || password.equals(repeatedPassword);
     }
 }

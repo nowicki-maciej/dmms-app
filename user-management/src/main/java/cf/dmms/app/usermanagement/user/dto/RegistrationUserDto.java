@@ -46,6 +46,8 @@ public class RegistrationUserDto {
         this.displayName = displayName;
         this.email = email;
         this.role = role;
+
+        validatePasswords();
     }
 
     public String getLogin() {
@@ -72,7 +74,7 @@ public class RegistrationUserDto {
         return role;
     }
 
-    private boolean arePasswordsValid() {
-        return password.equals(repeatedPassword);
+    private void validatePasswords() {
+        arePasswordsValid = password.equals(repeatedPassword);
     }
 }
