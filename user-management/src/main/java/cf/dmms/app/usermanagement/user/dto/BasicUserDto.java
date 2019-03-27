@@ -5,8 +5,6 @@ import cf.dmms.app.usermanagement.user.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.AssertTrue;
-
 public class BasicUserDto {
 
     private Long id;
