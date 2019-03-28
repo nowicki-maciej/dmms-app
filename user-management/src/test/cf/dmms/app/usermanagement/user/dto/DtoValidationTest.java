@@ -43,7 +43,7 @@ public class DtoValidationTest extends ValidationTestBase {
         RegistrationUserDto registrationUserDto = new RegistrationUserDto(
                 LOGIN,
                 VALID_PASSWORD,
-                "WRONG_REPETED_PASSWORD",
+                "SOME_REPEATED_PASSWORD",
                 DISPLAY_NAME,
                 "some-mail",
                 ADMIN
@@ -82,7 +82,7 @@ public class DtoValidationTest extends ValidationTestBase {
     }
 
     @Test
-    public void shouldNotValidateUserDtoWithMismatchPasswords() {
+    public void shouldNotValidateUpdateUserDtoWithMismatchPasswords() {
         UpdateUserDto updateUserDto = new UpdateUserDto(
                 LOGIN,
                 VALID_PASSWORD,

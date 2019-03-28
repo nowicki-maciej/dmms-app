@@ -11,6 +11,6 @@ public class LoginControllerAdvice {
 
     @ExceptionHandler({ BadCredentialsException.class })
     public ResponseEntity handleBadCredentialsException() {
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
     }
 }
