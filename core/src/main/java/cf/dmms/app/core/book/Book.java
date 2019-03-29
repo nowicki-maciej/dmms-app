@@ -2,6 +2,7 @@ package cf.dmms.app.core.book;
 
 import cf.dmms.app.core.author.Author;
 import cf.dmms.app.core.book.category.Category;
+import org.springframework.content.commons.annotations.ContentId;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,8 +23,8 @@ public class Book {
 	@Lob
 	private String description;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_id")
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@ContentId
 	private Set<Format> formats;
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)

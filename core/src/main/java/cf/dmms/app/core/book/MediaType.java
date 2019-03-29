@@ -21,5 +21,9 @@ public enum MediaType {
 	public List<String> getExtensions() {
 		return extensions;
 	}
+
+	public String getSaveExtension() {
+		return extensions.get(0);
+	}
 }
 
