@@ -14,7 +14,7 @@ public enum MediaType {
 
 	private List<String> extensions;
 
-	MediaType(String ...extensions) {
+	MediaType(String... extensions) {
 		this.extensions = Arrays.asList(extensions);
 	}
 

@@ -21,31 +21,31 @@ import static cf.dmms.app.usermanagement.user.UserMapper.toDto;
 @RequestMapping("/user-management")
 public class LoginController {
 
-    private AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
+	private AuthenticationManager authenticationManager;
+	private UserRepository userRepository;
 
-    public LoginController(AuthenticationManager authenticationManager, UserRepository userRepository) {
-        this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
-    }
+	public LoginController(AuthenticationManager authenticationManager, UserRepository userRepository) {
+		this.authenticationManager = authenticationManager;
+		this.userRepository = userRepository;
+	}
 
-    @PostMapping("/login")
-    public ResponseEntity<BasicUserDto> login(@Valid @RequestBody LoginDto loginDto) {
-        Authentication authentication = authenticationForUser(loginDto);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return ResponseEntity.ok(getUserDtoFrom(loginDto.getLogin()));
-    }
+	@PostMapping("/login")
+	public ResponseEntity<BasicUserDto> login(@Valid @RequestBody LoginDto loginDto) {
+		Authentication authentication = authenticationForUser(loginDto);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		return ResponseEntity.ok(getUserDtoFrom(loginDto.getLogin()));
+	}
 
-    private Authentication authenticationForUser(LoginDto loginDto) {
-        return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginDto.getLogin(),
-                        loginDto.getPassword()
-                )
-        );
-    }
+	private Authentication authenticationForUser(LoginDto loginDto) {
+		return authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(
+						loginDto.getLogin(),
+						loginDto.getPassword()
+				)
+		);
+	}
 
-    private BasicUserDto getUserDtoFrom(String login) {
-        return toDto(userRepository.getOneByLogin(login));
-    }
+	private BasicUserDto getUserDtoFrom(String login) {
+		return toDto(userRepository.getOneByLogin(login));
+	}
 }

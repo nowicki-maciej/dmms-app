@@ -40,29 +40,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.csrf()
-					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-					.and()
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.and()
 				.logout()
-					.invalidateHttpSession(true)
-					.deleteCookies("JSESSIONID")
-					.logoutUrl("/user-management/logout")
-					.logoutSuccessHandler(logoutSuccessHandler())
-					.and()
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+				.logoutUrl("/user-management/logout")
+				.logoutSuccessHandler(logoutSuccessHandler())
+				.and()
 				.exceptionHandling()
-					.authenticationEntryPoint(unauthorizedHandler)
-					.and()
+				.authenticationEntryPoint(unauthorizedHandler)
+				.and()
 				.authorizeRequests()
-					.antMatchers("/user-management/login", "/user-test-management/createUser")
-						.permitAll()
-					.anyRequest()
-						.authenticated();
+				.antMatchers("/user-management/login", "/user-test-management/createUser")
+				.permitAll()
+				.anyRequest()
+				.authenticated();
 	}
 
 	//changing default spring security behaviour
 	private LogoutSuccessHandler logoutSuccessHandler() {
 		return (request, response, authentication) -> response.setStatus(200);
 	}
-
 
 	@Bean(BeanIds.AUTHENTICATION_MANAGER)
 	@Override

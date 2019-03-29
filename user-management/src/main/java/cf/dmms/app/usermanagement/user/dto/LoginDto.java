@@ -7,25 +7,25 @@ import javax.validation.constraints.NotBlank;
 
 public class LoginDto {
 
-    @NotBlank
-    private String login;
+	@NotBlank
+	private String login;
 
-    @NotBlank
-    private String password;
+	@NotBlank
+	private String password;
 
-    @JsonCreator
-    public LoginDto(
-            @JsonProperty("login") @NotBlank String login,
-            @JsonProperty("password")@NotBlank String password) {
-        this.login = login;
-        this.password = password;
-    }
+	@JsonCreator
+	public LoginDto(
+			@JsonProperty("login") @NotBlank String login,
+			@JsonProperty("password") @NotBlank String password) {
+		this.login = login;
+		this.password = password;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 }

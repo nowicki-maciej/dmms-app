@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
-@ControllerAdvice(assignableTypes = {UserController.class})
+@ControllerAdvice(assignableTypes = { UserController.class })
 public class UserControllerAdvice {
 
-	@ExceptionHandler({UserNotFoundException.class})
+	@ExceptionHandler({ UserNotFoundException.class })
 	public ResponseEntity handleUserNotFoundException() {
 		return new ResponseEntity(UNAUTHORIZED);
 	}
 
-	@ExceptionHandler({DataIntegrityViolationException.class})
+	@ExceptionHandler({ DataIntegrityViolationException.class })
 	public ResponseEntity handleDataIntegrityViolationException() {
 		return new ResponseEntity(NOT_ACCEPTABLE);
 	}
