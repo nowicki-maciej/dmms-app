@@ -1,4 +1,4 @@
-package cf.dmms.app.core.author;
+package cf.dmms.app.web.api.book.category;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
 
-@ControllerAdvice(assignableTypes = { AuthorController.class })
-public class AuthorControllerAdvice {
+@ControllerAdvice(assignableTypes = { CategoryController.class })
+class CategoryControllerAdvice {
 
 	@ExceptionHandler({ EntityNotFoundException.class })
 	public ResponseEntity<?> handleEntityNotFoundException() {

@@ -1,13 +1,15 @@
-package cf.dmms.app.core.book.category;
+package cf.dmms.app.web.api.book.category;
 
+import cf.dmms.app.core.book.category.Category;
+import cf.dmms.app.core.book.category.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/categories")
+class CategoryController {
 
 	private CategoryService categoryService;
 
@@ -16,13 +18,15 @@ public class CategoryController {
 	}
 
 	@GetMapping
-	public List<CategoryDto> getCategories() {
+	public List<Category> getCategories() {
 		return categoryService.getAllCategories();
 	}
 
 	@PostMapping
-	public CategoryDto createCategory(@RequestBody @Valid CategoryDto categoryDto) {
-		return categoryService.createCategory(categoryDto);
+	public Category createCategory(@RequestBody @Valid CategoryDto categoryDto) {
+		Category category = CategoryMapper.toEntity(categoryDto);
+
+		return categoryService.createCategory(category);
 	}
 
 	@DeleteMapping("/{categoryId}")

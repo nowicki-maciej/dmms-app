@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice(assignableTypes = { LoginController.class })
 public class LoginControllerAdvice {
 
-    @ExceptionHandler({ BadCredentialsException.class })
-    public ResponseEntity handleBadCredentialsException() {
-        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-    }
+	@ExceptionHandler({ BadCredentialsException.class })
+	public ResponseEntity handleBadCredentialsException() {
+		return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+	}
 }

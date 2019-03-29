@@ -1,4 +1,4 @@
-package cf.dmms.app.core.author;
+package cf.dmms.app.web.api.author;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,24 +15,16 @@ public class AuthorDto {
 	@NotBlank
 	private String surname;
 
-	private AuthorDto(Long id, @NotBlank String name, @NotBlank String surname) {
+	AuthorDto(Long id, @NotBlank String name, @NotBlank String surname) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 	}
 
 	@JsonCreator
-	public AuthorDto(@JsonProperty("name") String name, @JsonProperty("surname") String surname) {
+	AuthorDto(@JsonProperty("name") String name, @JsonProperty("surname") String surname) {
 		this.name = name;
 		this.surname = surname;
-	}
-
-	public static AuthorDto from(Author author) {
-		return new AuthorDto(
-				author.getId(),
-				author.getName(),
-				author.getSurname()
-		);
 	}
 
 	public Long getId() {

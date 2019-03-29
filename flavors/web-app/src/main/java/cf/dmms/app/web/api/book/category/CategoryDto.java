@@ -1,4 +1,4 @@
-package cf.dmms.app.core.book.category;
+package cf.dmms.app.web.api.book.category;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

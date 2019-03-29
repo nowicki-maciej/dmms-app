@@ -2,9 +2,8 @@ package cf.dmms.app.core.book.category;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class CategoryService {
@@ -15,21 +14,19 @@ public class CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
-	public List<CategoryDto> getAllCategories() {
-		return categoryRepository.findAll().stream()
-				.map(Category::from)
-				.collect(toList());
+	public List<Category> getAllCategories() {
+		return new ArrayList<>(categoryRepository.findAll());
 	}
 
-	public CategoryDto createCategory(CategoryDto categoryDto) {
-		Category category = new Category(categoryDto.getName());
-		category = categoryRepository.save(category);
-		categoryDto.setId(category.getId());
-
-		return categoryDto;
+	public Category createCategory(Category category) {
+		return categoryRepository.save(category);
 	}
 
 	public void deleteCategory(Long id) {
 		categoryRepository.deleteById(id);
+	}
+
+	public List<Category> getAllCategories(List<Long> categoryIds) {
+		return categoryRepository.findAllById(categoryIds);
 	}
 }
