@@ -85,4 +85,16 @@ public class Book {
 	public Set<Category> getCategories() {
 		return categories;
 	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
