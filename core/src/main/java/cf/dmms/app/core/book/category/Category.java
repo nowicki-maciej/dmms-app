@@ -22,11 +22,6 @@ public class Category {
 		this.name = name;
 	}
 
-
-	public static CategoryDto from(Category category) {
-		return new CategoryDto(category.getId(), category.getName());
-	}
-
 	public Long getId() {
 		return id;
 	}

@@ -1,12 +1,14 @@
-package cf.dmms.app.core.author;
+package cf.dmms.app.web.api.author;
 
+import cf.dmms.app.core.author.Author;
+import cf.dmms.app.core.author.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/author")
-public class AuthorController {
+@RequestMapping("/authors")
+class AuthorController {
 
 	private AuthorService authorService;
 
@@ -16,17 +18,20 @@ public class AuthorController {
 
 	@GetMapping("/{authorId}")
 	public AuthorDto getAuthor(@PathVariable Long authorId) {
-		return authorService.getAuthorById(authorId);
+		Author author = authorService.getAuthorById(authorId);
+		return AuthorMapper.toDto(author);
 	}
 
 	@PostMapping
 	public AuthorDto createAuthor(@RequestBody @Valid AuthorDto authorDto) {
-		return authorService.createAuthor(authorDto);
+		Author author = AuthorMapper.toEntity(authorDto);
+		return AuthorMapper.toDto(authorService.createAuthor(author));
 	}
 
 	@PutMapping("/{authorId}")
 	public AuthorDto updateAuthor(@PathVariable Long authorId, @RequestBody @Valid AuthorDto authorDto) {
-		return authorService.updateAuthor(authorId, authorDto);
+		Author author = AuthorMapper.toEntity(authorDto);
+		return AuthorMapper.toDto(authorService.updateAuthor(authorId, author));
 	}
 
 	@DeleteMapping("/{authorId}")

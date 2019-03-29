@@ -1,11 +1,11 @@
-package cf.dmms.app.core.book.category;
+package cf.dmms.app.web.api.book.category;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 
-public class CategoryDto {
+class CategoryDto {
 
 	private Long id;
 

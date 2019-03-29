@@ -2,6 +2,8 @@ package cf.dmms.app.core.author;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthorService {
 
@@ -11,29 +13,27 @@ public class AuthorService {
 		this.authorRepository = authorRepository;
 	}
 
-	public AuthorDto getAuthorById(Long id) {
-		Author author = authorRepository.getOne(id);
-		return AuthorDto.from(author);
+	public Author getAuthorById(Long id) {
+		return authorRepository.getOne(id);
 	}
 
-	public AuthorDto createAuthor(AuthorDto authorDto) {
-		Author author = new Author(authorDto.getName(), authorDto.getSurname());
-		author = authorRepository.save(author);
-		authorDto.setId(author.getId());
-
-		return authorDto;
+	public Author createAuthor(Author author) {
+		return authorRepository.save(author);
 	}
 
-	public AuthorDto updateAuthor(Long authorId, AuthorDto authorDto) {
+	public Author updateAuthor(Long authorId, Author changedAuthor) {
 		Author author = authorRepository.getOne(authorId);
-		author.setName(authorDto.getName());
-		author.setSurname(authorDto.getSurname());
+		author.setName(changedAuthor.getName());
+		author.setSurname(changedAuthor.getSurname());
 
-		authorDto.setId(authorId);
-		return authorDto;
+		return author;
 	}
 
 	public void deleteAuthor(Long id) {
 		authorRepository.deleteById(id);
+	}
+
+	public List<Author> getAllAuthors(List<Long> authorIds) {
+		return authorRepository.findAllById(authorIds);
 	}
 }
