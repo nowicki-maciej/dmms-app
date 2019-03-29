@@ -1,5 +1,8 @@
 package cf.dmms.app.web.api.book;
 
+import cf.dmms.app.web.api.author.AuthorDto;
+import cf.dmms.app.web.api.book.category.CategoryDto;
+
 import java.util.List;
 
 class BookDto {
@@ -8,10 +11,16 @@ class BookDto {
 	private String title;
 	private String isbn;
 	private String description;
-	private List<Long> authors;
-	private List<Long> categories;
+	private List<AuthorDto> authors;
+	private List<CategoryDto> categories;
 
-	public BookDto(Long id, String title, String isbn, String description, List<Long> authors, List<Long> categories) {
+	BookDto(
+			Long id,
+			String title,
+			String isbn,
+			String description,
+			List<AuthorDto> authors,
+			List<CategoryDto> categories) {
 		this.id = id;
 		this.title = title;
 		this.isbn = isbn;
@@ -36,11 +45,11 @@ class BookDto {
 		return description;
 	}
 
-	public List<Long> getAuthors() {
+	public List<AuthorDto> getAuthors() {
 		return authors;
 	}
 
-	public List<Long> getCategories() {
+	public List<CategoryDto> getCategories() {
 		return categories;
 	}
 }

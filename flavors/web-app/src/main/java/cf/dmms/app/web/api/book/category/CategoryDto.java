@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 
-class CategoryDto {
+public class CategoryDto {
 
 	private Long id;
 

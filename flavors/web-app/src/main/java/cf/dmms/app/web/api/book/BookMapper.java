@@ -5,10 +5,14 @@ import cf.dmms.app.core.author.AuthorService;
 import cf.dmms.app.core.book.Book;
 import cf.dmms.app.core.book.category.Category;
 import cf.dmms.app.core.book.category.CategoryService;
+import cf.dmms.app.web.api.author.AuthorMapper;
+import cf.dmms.app.web.api.book.category.CategoryMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.function.Function;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -44,20 +48,14 @@ class BookMapper {
 				book.getTitle(),
 				book.getIsbn(),
 				book.getDescription(),
-				fetchIds(book.getAuthors(), Author::getId),
-				fetchIds(book.getCategories(), Category::getId)
+				AuthorMapper.toDto(book.getAuthors()),
+				CategoryMapper.toDto(book.getCategories())
 		);
 	}
 
 	List<BookDto> toDto(List<Book> books) {
 		return books.stream()
 				.map(this::toDto)
-				.collect(toList());
-	}
-
-	static <T> List<Long> fetchIds(Collection<T> entities, Function<T, Long> idMapper) {
-		return entities.stream()
-				.map(idMapper)
 				.collect(toList());
 	}
 }
