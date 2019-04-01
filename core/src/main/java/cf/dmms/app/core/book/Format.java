@@ -14,13 +14,14 @@ public class Format {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_id")
+	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 
 	@Column(nullable = false)
 	@ContentId
 	private String storageToken;
 
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private MediaType format;
 
