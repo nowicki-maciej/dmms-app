@@ -2,7 +2,7 @@ package cf.dmms.app.usermanagement.user.dto;
 
 import org.junit.Test;
 
-import static cf.dmms.app.usermanagement.user.Role.ADMIN;
+import static cf.dmms.app.usermanagement.user.Role.ROLE_ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DtoValidationTest extends ValidationTestBase {
@@ -15,7 +15,7 @@ public class DtoValidationTest extends ValidationTestBase {
 				VALID_PASSWORD,
 				DISPLAY_NAME,
 				VALID_EMAIL,
-				ADMIN
+				ROLE_ADMIN
 		);
 
 		assertThat(extractMessages(validator.validate(registrationUserDto)))
@@ -30,7 +30,7 @@ public class DtoValidationTest extends ValidationTestBase {
 				VALID_PASSWORD,
 				DISPLAY_NAME,
 				VALID_EMAIL,
-				ADMIN
+				ROLE_ADMIN
 		);
 
 		assertThat(extractMessages(validator.validate(registrationUserDto)))
@@ -45,7 +45,7 @@ public class DtoValidationTest extends ValidationTestBase {
 				"SOME_REPEATED_PASSWORD",
 				DISPLAY_NAME,
 				"some-mail",
-				ADMIN
+				ROLE_ADMIN
 		);
 
 		assertThat(extractMessages(validator.validate(registrationUserDto)))
