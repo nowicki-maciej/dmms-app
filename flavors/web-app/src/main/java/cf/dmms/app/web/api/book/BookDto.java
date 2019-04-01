@@ -13,6 +13,7 @@ class BookDto {
 	private String description;
 	private List<AuthorDto> authors;
 	private List<CategoryDto> categories;
+	private List<String> formats;
 
 	BookDto(
 			Long id,
@@ -20,13 +21,15 @@ class BookDto {
 			String isbn,
 			String description,
 			List<AuthorDto> authors,
-			List<CategoryDto> categories) {
+			List<CategoryDto> categories,
+			List<String> formats) {
 		this.id = id;
 		this.title = title;
 		this.isbn = isbn;
 		this.description = description;
 		this.authors = authors;
 		this.categories = categories;
+		this.formats = formats;
 	}
 
 	public Long getId() {
@@ -51,5 +54,9 @@ class BookDto {
 
 	public List<CategoryDto> getCategories() {
 		return categories;
+	}
+
+	public List<String> getFormats() {
+		return formats;
 	}
 }

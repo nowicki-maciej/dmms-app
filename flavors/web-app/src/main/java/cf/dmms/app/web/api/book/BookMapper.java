@@ -49,8 +49,13 @@ class BookMapper {
 				book.getIsbn(),
 				book.getDescription(),
 				AuthorMapper.toDto(book.getAuthors()),
-				CategoryMapper.toDto(book.getCategories())
+				CategoryMapper.toDto(book.getCategories()),
+				formatsToStringList(book)
 		);
+	}
+
+	private List<String> formatsToStringList(Book book) {
+		return book.getFormats().stream().map(format -> format.getFormat().toString()).collect(toList());
 	}
 
 	List<BookDto> toDto(List<Book> books) {
