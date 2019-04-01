@@ -41,26 +41,22 @@ public class UserController {
 		return new ResponseEntity<>(OK);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping
 	public ResponseEntity<List<BasicUserDto>> getAllUsers() {
 		return ResponseEntity.ok(userService.findAllUsers());
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/{userId}")
 	public ResponseEntity<BasicUserDto> findUserById(@PathVariable("userId") Long userId) {
 		return ResponseEntity.ok(userService.findById(userId));
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity register(@Valid @RequestBody RegistrationUserDto userDto) {
 		userService.register(userDto);
 		return new ResponseEntity<>(OK);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/role")
 	public ResponseEntity updateUser(@Valid @RequestBody RoleUpdateUserDto userDto) {
 		if (currentUser().getId().equals(userDto.getId())) {
@@ -70,7 +66,6 @@ public class UserController {
 		return new ResponseEntity<>(OK);
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{userId}")
 	public ResponseEntity updateUser(@PathVariable("userId") Long userId) {
 		if (currentUser().getId().equals(userId)) {

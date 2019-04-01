@@ -5,6 +5,7 @@ import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
 import cf.dmms.app.usermanagement.user.dto.RegistrationUserDto;
 import cf.dmms.app.usermanagement.user.dto.RoleUpdateUserDto;
 import cf.dmms.app.usermanagement.user.dto.UpdateUserDto;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,14 @@ public class DefaultUserService implements UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	public BasicUserDto findById(Long id) throws UserNotFoundException {
 		User user = findUserById(id);
 		return toDto(user);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	public List<BasicUserDto> findAllUsers() {
 		List<User> users = userRepository.findAll();
@@ -40,6 +43,7 @@ public class DefaultUserService implements UserService {
 				.collect(Collectors.toList());
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	public void register(RegistrationUserDto registrationUserDto) {
 		User user = UserMapper.toEntity(registrationUserDto, passwordEncoder);
@@ -64,6 +68,7 @@ public class DefaultUserService implements UserService {
 		userRepository.save(user);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	public void updateUserRole(RoleUpdateUserDto userDto) throws UserNotFoundException {
 		User user = findUserById(userDto.getId());
@@ -74,6 +79,7 @@ public class DefaultUserService implements UserService {
 		userRepository.save(user);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@Override
 	public void deleteUser(Long userId) {
 		userRepository.deleteById(userId);
