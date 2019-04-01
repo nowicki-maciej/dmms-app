@@ -7,7 +7,7 @@ public enum MediaType {
 
 	PDF("pdf"),
 	MOBI("mobi", "prc"),
-	EBUB("epub"),
+	EPUB("epub"),
 	TXT("txt"),
 	DOCX("docx"),
 	KINDLE("azw");
