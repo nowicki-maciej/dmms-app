@@ -49,7 +49,7 @@ class BookController {
 	}
 
 	@GetMapping("/{bookId}/{type}")
-	ResponseEntity downloadBook(@PathVariable Long bookId, MediaType type) {
+	ResponseEntity downloadBook(@PathVariable Long bookId, @PathVariable MediaType type) {
 		Book book = bookService.getBook(bookId);
 		InputStream bookContent = bookService.getBookContent(book, type);
 
