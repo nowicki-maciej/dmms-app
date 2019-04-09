@@ -5,6 +5,9 @@ import cf.dmms.app.core.author.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/authors")
@@ -14,6 +17,13 @@ class AuthorController {
 
 	public AuthorController(AuthorService authorService) {
 		this.authorService = authorService;
+	}
+
+	@GetMapping
+	public List<AuthorDto> getAllAuthors() {
+		return authorService.getAllAuthors().stream()
+				.map(AuthorMapper::toDto)
+				.collect(toList());
 	}
 
 	@GetMapping("/{authorId}")
