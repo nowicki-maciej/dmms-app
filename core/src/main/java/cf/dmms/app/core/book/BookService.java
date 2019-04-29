@@ -48,11 +48,13 @@ public class BookService {
 		if (bookFiles.isEmpty()) {
 			throw new IllegalStateException("Book should have at least one format.");
 		}
+		log.info("Adding book. Submitted book formats: {}", bookFiles.keySet());
 
 		bookFiles.forEach((type, content) -> {
 			Format format = Format.withUUIDToken(type);
 			bookContentStore.setContent(format, new ByteArrayInputStream(content));
 			book.getFormats().add(format);
+			log.info("Adding format {} with storage token {}", format.getFormat(), format.getStorageToken());
 		});
 
 		return bookRepository.save(book);
@@ -75,5 +77,6 @@ public class BookService {
 
 		bookContentStore.setContent(format, inputStream);
 		book.getFormats().add(format);
+		log.info("Adding book format {} with storage token {}", format.getFormat(), format.getStorageToken());
 	}
 }
