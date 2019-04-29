@@ -1,6 +1,10 @@
 package cf.dmms.appmanagement.log;
 
 import cf.dmms.appmanagement.tools.FilesArchiver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,19 +14,22 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LogDownloader {
+@Service
+public class LogService {
 
+	private static final Logger log = LoggerFactory.getLogger(LogService.class);
 	private String logsDirPath;
 
-	public LogDownloader(String logsDirPath) {
+	LogService(@Value("${dmmsapp.logsDirPath}") String logsDirPath) {
 		this.logsDirPath = logsDirPath;
 	}
 
-	public File getArchivedLogs() {
+	File getArchivedLogs() {
 		try {
+			log.info("Generating logs archive.");
 			return FilesArchiver.zipFiles(loadAllFiles());
 		} catch (IOException e) {
-			throw new IllegalStateException("Error occured during compresing logs.", e);
+			throw new IllegalStateException("Error occurred during compressing logs.", e);
 		}
 	}
 

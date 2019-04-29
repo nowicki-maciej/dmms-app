@@ -12,26 +12,40 @@ import java.util.zip.ZipInputStream;
 
 public class FileUnarchiver {
 
-	public static List<File> unarchive(File archive) throws IOException {
-		List<File> out = new ArrayList<>();
-		File destinationDir = Files.createTempDirectory("dmms-unarchived").toFile();
+	private static final String DIR_PREFIX = "dmms-unarchived";
 
-		byte[] buffer = new byte[1024];
+	public static List<File> unarchive(File archive) throws IOException {
+		File destinationDir = Files.createTempDirectory(DIR_PREFIX).toFile();
+
+		return readFilesFromArchive(archive, destinationDir);
+	}
+
+	private static List<File> readFilesFromArchive(File archive, File destinationDir) throws IOException {
+		List<File> out = new ArrayList<>();
 		ZipInputStream zis = new ZipInputStream(new FileInputStream(archive));
-		ZipEntry zipEntry = zis.getNextEntry();
-		while (zipEntry != null) {
-			File newFile = new File(destinationDir, zipEntry.getName());
-			FileOutputStream fos = new FileOutputStream(newFile);
-			int len;
-			while ((len = zis.read(buffer)) > 0) {
-				fos.write(buffer, 0, len);
-			}
-			fos.close();
-			out.add(newFile);
-			zipEntry = zis.getNextEntry();
-		}
+		unarchiveFiles(destinationDir, out, zis);
 		zis.closeEntry();
 		zis.close();
 		return out;
+	}
+
+	private static void unarchiveFiles(File destinationDir, List<File> output, ZipInputStream zipInputStream) throws IOException {
+		ZipEntry zipEntry = zipInputStream.getNextEntry();
+		byte[] buffer = new byte[1024];
+		while (zipEntry != null) {
+			File newFile = new File(destinationDir, zipEntry.getName());
+			writeBytesToFile(newFile, buffer, zipInputStream);
+			output.add(newFile);
+			zipEntry = zipInputStream.getNextEntry();
+		}
+	}
+
+	private static void writeBytesToFile(File file, byte[] buffer, ZipInputStream zipInputStream) throws IOException {
+		FileOutputStream fos = new FileOutputStream(file);
+		int length;
+		while ((length = zipInputStream.read(buffer)) > 0) {
+			fos.write(buffer, 0, length);
+		}
+		fos.close();
 	}
 }

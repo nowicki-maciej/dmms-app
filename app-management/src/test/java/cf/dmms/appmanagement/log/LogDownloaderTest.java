@@ -8,41 +8,44 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static cf.dmms.appmanagement.assertion.FileAssert.assertThat;
 
 public class LogDownloaderTest {
 
+	private static final String LOG1 = "logs/log1";
+	private static final String LOG2 = "logs/log2";
 
-	LogDownloader logDownloader;
+	private LogService logDownloader;
+	private List<File> unarchived;
 
 	@Before
 	public void setup() throws IOException {
-		logDownloader = new LogDownloader(getFileDirFromResources("logs").getPath());
+		logDownloader = new LogService(getFileFromResources("logs").getPath());
 	}
 
 	@Test
-	public void test() throws IOException {
-
+	public void shouldCreateCorrectLogsArchive() throws IOException {
 		File archive = logDownloader.getArchivedLogs();
+		unarchived = FileUnarchiver.unarchive(archive);
 
-		List<File> unarchived = FileUnarchiver.unarchive(archive);
-
-		//TODO: finish it
-//		assertThat(unarchived).containsOnly()
-
-		System.out.println("done.");
+		assertThat(getUnarchivedFileByName("log1"))
+				.isEqualTo(getFileFromResources(LOG1));
+		assertThat(getUnarchivedFileByName("log2"))
+				.isEqualTo(getFileFromResources(LOG2));
 	}
 
-
-	private File getFileDirFromResources(String dirName) throws IOException {
-		return new ClassPathResource(dirName).getFile();
+	private File getFileFromResources(String fileName) throws IOException {
+		return new ClassPathResource(fileName).getFile();
 	}
 
-	private List<File> getFilesFromResources() throws IOException {
-
-//		return new ClassPathResource(filename).getFile();
-		return null;
+	private File getUnarchivedFileByName(String expectedFilename) {
+		return unarchived
+				.stream()
+				.filter(file -> file.getName().equals(expectedFilename))
+				.collect(Collectors.toList())
+				.get(0);
 	}
 
 }
