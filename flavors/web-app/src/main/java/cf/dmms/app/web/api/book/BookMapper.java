@@ -35,8 +35,7 @@ class BookMapper {
 				newBookDto.getTitle(),
 				newBookDto.getIsbn(),
 				newBookDto.getDescription(),
-				// TODO: 3/29/19
-				Collections.emptySet(),
+				new HashSet<>(),
 				authors,
 				categories
 		);

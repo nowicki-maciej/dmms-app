@@ -4,6 +4,7 @@ import org.springframework.content.commons.annotations.ContentId;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "formats")
@@ -12,10 +13,6 @@ public class Format {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_id", nullable = false)
-	private Book book;
 
 	@Column(nullable = false)
 	@ContentId
@@ -33,6 +30,13 @@ public class Format {
 		this.format = format;
 	}
 
+	public static Format withUUIDToken(MediaType mediaType) {
+		return new Format(
+				UUID.randomUUID().toString(),
+				mediaType
+		);
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -43,10 +47,6 @@ public class Format {
 
 	public MediaType getFormat() {
 		return format;
-	}
-
-	Book getBook() {
-		return book;
 	}
 
 	@Override

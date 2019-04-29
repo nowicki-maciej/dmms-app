@@ -1,18 +1,24 @@
 package cf.dmms.app.core.book;
 
 import cf.dmms.app.core.book.storage.BookContentStore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
 public class BookService {
+
+	private static final Logger log = LoggerFactory.getLogger(BookService.class);
 
 	private BookRepository bookRepository;
 	private BookContentStore bookContentStore;
@@ -38,7 +44,17 @@ public class BookService {
 		bookRepository.deleteById(id);
 	}
 
-	public Book addBook(Book book) {
+	public Book addBook(Book book, Map<MediaType, byte[]> bookFiles) {
+		if (bookFiles.isEmpty()) {
+			throw new IllegalStateException("Book should have at least one format.");
+		}
+
+		bookFiles.forEach((type, content) -> {
+			Format format = Format.withUUIDToken(type);
+			bookContentStore.setContent(format, new ByteArrayInputStream(content));
+			book.getFormats().add(format);
+		});
+
 		return bookRepository.save(book);
 	}
 

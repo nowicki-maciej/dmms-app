@@ -9,11 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.InputStream;
 import java.util.List;
-
-import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/books")
@@ -37,12 +34,6 @@ class BookController {
 		return bookMapper.toDto(bookService.getBook(bookId));
 	}
 
-	@PostMapping
-	public BookDto addBook(@Valid @RequestBody NewBookDto newBookDto) {
-		Book book = bookMapper.toEntity(newBookDto);
-		return bookMapper.toDto(bookService.addBook(book));
-	}
-
 	@DeleteMapping("/{bookId}")
 	public void deleteBook(@PathVariable Long bookId) {
 		bookService.deleteBookById(bookId);
@@ -62,4 +53,5 @@ class BookController {
 	private String buildFilename(Book book, MediaType type) {
 		return book.getTitle() + "." + type.getSaveExtension();
 	}
+
 }
