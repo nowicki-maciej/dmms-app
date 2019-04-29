@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
 
-@ControllerAdvice(assignableTypes = { BookController.class })
+@ControllerAdvice(assignableTypes = { BookController.class, BookUploadController.class })
 class BookControllerAdvice {
 
 	@ExceptionHandler({ EntityNotFoundException.class })
@@ -15,4 +15,8 @@ class BookControllerAdvice {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler({ IllegalStateException.class })
+	ResponseEntity<?> handleIllegalStateException() {
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
 }

@@ -23,7 +23,8 @@ public class Book {
 	@Lob
 	private String description;
 
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "book_id", nullable = false)
 	@ContentId
 	private Set<Format> formats;
 
