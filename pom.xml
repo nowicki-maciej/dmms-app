@@ -13,6 +13,7 @@
 	<modules>
 		<module>core</module>
 		<module>user-management</module>
+		<module>app-management</module>
 	</modules>
 
 	<dependencyManagement>
