@@ -1,6 +1,6 @@
-package cf.dmms.appmanagement.log;
+package cf.dmms.app.appmanagement.log;
 
-import cf.dmms.appmanagement.tools.FileUnarchiver;
+import cf.dmms.app.appmanagement.tools.FileUnarchiver;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -8,26 +8,25 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static cf.dmms.appmanagement.assertion.FileAssert.assertThat;
+import static cf.dmms.app.appmanagement.assertion.FileAssert.assertThat;
 
 public class LogDownloaderTest {
 
 	private static final String LOG1 = "logs/log1";
 	private static final String LOG2 = "logs/log2";
 
-	private LogService logDownloader;
+	private LogService logService;
 	private List<File> unarchived;
 
 	@Before
 	public void setup() throws IOException {
-		logDownloader = new LogService(getFileFromResources("logs").getPath());
+		logService = new LogService(getFileFromResources("logs").getPath());
 	}
 
 	@Test
 	public void shouldCreateCorrectLogsArchive() throws IOException {
-		File archive = logDownloader.getArchivedLogs();
+		File archive = logService.getArchivedLogs();
 		unarchived = FileUnarchiver.unarchive(archive);
 
 		assertThat(getUnarchivedFileByName("log1"))

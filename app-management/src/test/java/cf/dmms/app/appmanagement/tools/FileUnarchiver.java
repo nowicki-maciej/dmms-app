@@ -1,4 +1,4 @@
-package cf.dmms.appmanagement.tools;
+package cf.dmms.app.appmanagement.tools;
 
 import java.io.File;
 import java.io.FileInputStream;

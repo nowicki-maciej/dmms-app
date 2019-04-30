@@ -1,4 +1,4 @@
-package cf.dmms.appmanagement.assertion;
+package cf.dmms.app.appmanagement.assertion;
 
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;

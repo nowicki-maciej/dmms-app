@@ -1,4 +1,4 @@
-package cf.dmms.appmanagement.log;
+package cf.dmms.app.appmanagement.log;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

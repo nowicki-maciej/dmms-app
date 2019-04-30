@@ -1,6 +1,6 @@
-package cf.dmms.appmanagement.log;
+package cf.dmms.app.appmanagement.log;
 
-import cf.dmms.appmanagement.tools.FilesArchiver;
+import cf.dmms.app.appmanagement.tools.FilesArchiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
