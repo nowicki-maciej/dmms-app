@@ -5,6 +5,7 @@ import cf.dmms.app.core.book.category.CategoryService;
 import cf.dmms.app.spi.Author;
 import cf.dmms.app.spi.Book;
 import cf.dmms.app.spi.Category;
+import cf.dmms.app.usermanagement.user.UserRepository;
 import cf.dmms.app.web.api.author.AuthorMapper;
 import cf.dmms.app.web.api.book.category.CategoryMapper;
 import org.springframework.stereotype.Component;
@@ -20,17 +21,20 @@ class BookMapper {
 
 	private AuthorService authorService;
 	private CategoryService categoryService;
+	private UserRepository userRepository;
 
-	BookMapper(AuthorService authorService, CategoryService categoryService) {
+	BookMapper(AuthorService authorService, CategoryService categoryService, UserRepository userRepository) {
 		this.authorService = authorService;
 		this.categoryService = categoryService;
+		this.userRepository = userRepository;
 	}
 
-	Book toEntity(NewBookDto newBookDto) {
+	Book toEntity(Long userId, NewBookDto newBookDto) {
 		Set<Author> authors = new HashSet<>(authorService.getAllAuthors(newBookDto.getAuthors()));
 		Set<Category> categories = new HashSet<>(categoryService.getAllCategories(newBookDto.getCategories()));
 
 		return new Book(
+				userRepository.getOne(userId),
 				newBookDto.getTitle(),
 				newBookDto.getIsbn(),
 				newBookDto.getDescription(),

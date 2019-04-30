@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.TestPropertySource;
 
 @Configuration
-@ComponentScan(basePackages = "cf.dmms.app.core")
-@EnableJpaRepositories(basePackages = "cf.dmms.app.core")
-@EntityScan(basePackages = "cf.dmms.app.core")
+@ComponentScan(basePackages = "cf.dmms.app")
+@EnableJpaRepositories(basePackages = "cf.dmms.app")
+@EntityScan(basePackages = "cf.dmms.app")
 @TestPropertySource("classpath:dmms-core.properties")
 public abstract class IntegrationTestBase {
 }

@@ -118,6 +118,7 @@ public class BookStorageIntegrationTest extends IntegrationTestBase {
 		categories.add(new Category("SciFi"));
 
 		Book book = new Book(
+				null,
 				"title",
 				"isbn",
 				"desc",
