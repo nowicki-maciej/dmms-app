@@ -1,4 +1,4 @@
-package cf.dmms.app.core.book.category;
+package cf.dmms.app.spi;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

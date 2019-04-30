@@ -1,8 +1,8 @@
 package cf.dmms.app.web.api.book;
 
-import cf.dmms.app.core.book.Book;
 import cf.dmms.app.core.book.BookService;
-import cf.dmms.app.core.book.MediaType;
+import cf.dmms.app.spi.Book;
+import cf.dmms.app.spi.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;

@@ -1,6 +1,10 @@
 package cf.dmms.app.core.book;
 
 import cf.dmms.app.core.book.storage.BookContentStore;
+import cf.dmms.app.spi.Book;
+import cf.dmms.app.spi.BookFormatAlreadyExistsException;
+import cf.dmms.app.spi.Format;
+import cf.dmms.app.spi.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

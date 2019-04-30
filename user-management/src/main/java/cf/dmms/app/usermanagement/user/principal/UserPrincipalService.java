@@ -1,6 +1,6 @@
 package cf.dmms.app.usermanagement.user.principal;
 
-import cf.dmms.app.usermanagement.user.User;
+import cf.dmms.app.spi.user.User;
 import cf.dmms.app.usermanagement.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

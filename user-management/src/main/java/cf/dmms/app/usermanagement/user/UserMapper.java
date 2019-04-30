@@ -1,5 +1,6 @@
 package cf.dmms.app.usermanagement.user;
 
+import cf.dmms.app.spi.user.User;
 import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
 import cf.dmms.app.usermanagement.user.dto.RegistrationUserDto;
 import org.springframework.security.crypto.password.PasswordEncoder;

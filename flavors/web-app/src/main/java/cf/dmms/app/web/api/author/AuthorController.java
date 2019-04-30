@@ -1,7 +1,7 @@
 package cf.dmms.app.web.api.author;
 
-import cf.dmms.app.core.author.Author;
 import cf.dmms.app.core.author.AuthorService;
+import cf.dmms.app.spi.Author;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

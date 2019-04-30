@@ -1,5 +1,6 @@
 package cf.dmms.app.core.author;
 
+import cf.dmms.app.spi.Author;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

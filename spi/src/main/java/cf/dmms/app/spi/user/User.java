@@ -1,7 +1,6 @@
-package cf.dmms.app.usermanagement.user;
+package cf.dmms.app.spi.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity

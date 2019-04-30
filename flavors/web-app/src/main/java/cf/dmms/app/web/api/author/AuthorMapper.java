@@ -1,6 +1,6 @@
 package cf.dmms.app.web.api.author;
 
-import cf.dmms.app.core.author.Author;
+import cf.dmms.app.spi.Author;
 
 import java.util.List;
 import java.util.Set;

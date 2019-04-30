@@ -1,4 +1,4 @@
-package cf.dmms.app.core.book;
+package cf.dmms.app.spi;
 
 import org.springframework.content.commons.annotations.ContentId;
 

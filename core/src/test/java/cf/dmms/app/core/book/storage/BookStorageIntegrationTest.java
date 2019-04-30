@@ -1,10 +1,11 @@
 package cf.dmms.app.core.book.storage;
 
-import cf.dmms.app.core.author.Author;
 import cf.dmms.app.core.author.AuthorRepository;
-import cf.dmms.app.core.book.*;
-import cf.dmms.app.core.book.category.Category;
+import cf.dmms.app.core.book.BookRepository;
+import cf.dmms.app.core.book.BookService;
+import cf.dmms.app.core.book.IntegrationTestBase;
 import cf.dmms.app.core.book.category.CategoryRepository;
+import cf.dmms.app.spi.*;
 import org.apache.commons.io.IOUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,7 +39,6 @@ public class BookStorageIntegrationTest extends IntegrationTestBase {
 	private static final byte[] PDF_CONTENT = new byte[] { 1, 2, 3 };
 	private static final byte[] TXT_CONTENT = new byte[] { 3, 2, 1 };
 
-
 	@Autowired
 	private BookRepository bookRepository;
 
@@ -67,7 +67,8 @@ public class BookStorageIntegrationTest extends IntegrationTestBase {
 				.forEach(path -> {
 					try {
 						Files.delete(path);
-					} catch (IOException e) {}
+					} catch (IOException e) {
+					}
 				});
 	}
 

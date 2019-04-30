@@ -1,7 +1,7 @@
 package cf.dmms.app.web.api.book.category;
 
-import cf.dmms.app.core.book.category.Category;
 import cf.dmms.app.core.book.category.CategoryService;
+import cf.dmms.app.spi.Category;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

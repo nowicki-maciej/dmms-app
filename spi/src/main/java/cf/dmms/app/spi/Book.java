@@ -1,7 +1,5 @@
-package cf.dmms.app.core.book;
+package cf.dmms.app.spi;
 
-import cf.dmms.app.core.author.Author;
-import cf.dmms.app.core.book.category.Category;
 import org.springframework.content.commons.annotations.ContentId;
 
 import javax.persistence.*;
