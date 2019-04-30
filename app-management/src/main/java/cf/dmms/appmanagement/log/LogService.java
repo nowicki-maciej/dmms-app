@@ -20,17 +20,13 @@ public class LogService {
 	private static final Logger log = LoggerFactory.getLogger(LogService.class);
 	private String logsDirPath;
 
-	LogService(@Value("${dmmsapp.logsDirPath}") String logsDirPath) {
+	LogService(@Value("${logsDirPath}") String logsDirPath) {
 		this.logsDirPath = logsDirPath;
 	}
 
 	File getArchivedLogs() {
-		try {
-			log.info("Generating logs archive.");
-			return FilesArchiver.zipFiles(loadAllFiles());
-		} catch (IOException e) {
-			throw new IllegalStateException("Error occurred during compressing logs.", e);
-		}
+		log.info("Generating logs archive.");
+		return FilesArchiver.zipFiles(loadAllFiles());
 	}
 
 	private List<File> loadAllFiles() {
@@ -43,5 +39,4 @@ public class LogService {
 			throw new IllegalStateException("Error occurred during accessing log files.", e);
 		}
 	}
-
 }

@@ -20,12 +20,13 @@ public class FileUnarchiver {
 		return readFilesFromArchive(archive, destinationDir);
 	}
 
-	private static List<File> readFilesFromArchive(File archive, File destinationDir) throws IOException {
+	private static List<File> readFilesFromArchive(File archive, File destinationDir) {
 		List<File> out = new ArrayList<>();
-		ZipInputStream zis = new ZipInputStream(new FileInputStream(archive));
-		unarchiveFiles(destinationDir, out, zis);
-		zis.closeEntry();
-		zis.close();
+		try(ZipInputStream zis = new ZipInputStream(new FileInputStream(archive))) {
+			unarchiveFiles(destinationDir, out, zis);
+		} catch (IOException e) {
+			throw new IllegalStateException("Couldn't read files from archive.", e);
+		}
 		return out;
 	}
 

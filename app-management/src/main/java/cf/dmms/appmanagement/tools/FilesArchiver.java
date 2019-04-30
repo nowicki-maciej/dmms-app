@@ -7,11 +7,14 @@ import java.util.zip.ZipOutputStream;
 
 public class FilesArchiver {
 
-	public static File zipFiles(List<File> files) throws IOException {
-		File output = File.createTempFile("DMMS-logs", ".zip");
-		ZipOutputStream zipOut = zipOutputStream(output);
-		files.forEach(file -> addToZip(zipOut, file));
-		zipOut.close();
+	public static File zipFiles(List<File> files) {
+		File output = tempFile();
+
+		try(ZipOutputStream zipOut = zipOutputStream(output)) {
+			files.forEach(file -> addToZip(zipOut, file));
+		} catch (IOException e) {
+			throw new IllegalStateException("Error during creating files archive.", e);
+		}
 		return output;
 	}
 
@@ -21,7 +24,7 @@ public class FilesArchiver {
 			zipOutputStream.putNextEntry(zipEntry);
 			writeBytes(fileInputStream, zipOutputStream);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new IllegalStateException("Couldn't add file to archive.", e);
 		}
 	}
 
@@ -36,5 +39,13 @@ public class FilesArchiver {
 
 	private static ZipOutputStream zipOutputStream(File file) throws FileNotFoundException {
 		return new ZipOutputStream(new FileOutputStream(file));
+	}
+
+	private static File tempFile() {
+		try {
+			return File.createTempFile("DMMS-logs", ".zip");
+		} catch (IOException e) {
+			throw new IllegalStateException("Can't create archive file.", e);
+		}
 	}
 }

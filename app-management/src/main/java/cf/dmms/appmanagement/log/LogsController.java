@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.OK;
 public class LogsController {
 
 	private static final String FILE_PREFIX = "DMMS-log_";
-	private static final String DATE_PATTERN = "ddMMyyyy-HHmmss";
+	private static final String DATE_PATTERN = "yyyyMMdd-HHmmss";
 
 	private LogService logService;
 
@@ -27,7 +27,7 @@ public class LogsController {
 	}
 
 	@GetMapping(value = "/download", produces = "application/zip")
-	public ResponseEntity downloadLogs() {
+	public ResponseEntity<byte[]> downloadLogs() {
 		byte[] content = getArchivedLogsAsBytes();
 		return new ResponseEntity<>(content, prepareHeaders(), OK);
 	}

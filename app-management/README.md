@@ -7,4 +7,4 @@
 ```
 
 ##Properties
-`dmmsapp.logsDirPath` - web app log files location directory.
+`logsDirPath` - web app log files location directory.

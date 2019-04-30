@@ -41,11 +41,10 @@ public class LogDownloaderTest {
 	}
 
 	private File getUnarchivedFileByName(String expectedFilename) {
-		return unarchived
-				.stream()
+		return unarchived.stream()
 				.filter(file -> file.getName().equals(expectedFilename))
-				.collect(Collectors.toList())
-				.get(0);
+				.findFirst()
+				.orElseThrow(() -> new IllegalStateException("There is no file with given name"));
 	}
 
 }
