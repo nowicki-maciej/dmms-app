@@ -3,6 +3,9 @@ package cf.dmms.app.web.api.book;
 import cf.dmms.app.core.book.Book;
 import cf.dmms.app.core.book.BookService;
 import cf.dmms.app.core.book.MediaType;
+import cf.dmms.app.web.resolver.CurrentUserId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,8 @@ import java.util.List;
 @RequestMapping("/books")
 class BookController {
 
+	private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
 	private BookService bookService;
 	private BookMapper bookMapper;
 
@@ -25,7 +30,9 @@ class BookController {
 	}
 
 	@GetMapping
-	public List<BookDto> getAllBooks() {
+	public List<BookDto> getAllBooks(@CurrentUserId Long userId) {
+		log.info("[@@@@@@@@] UserId = {}", userId);
+
 		return bookMapper.toDto(bookService.getAllBooks());
 	}
 
