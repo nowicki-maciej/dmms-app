@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/user-management/login", "/user-test-management/createUser")
 						.permitAll()
 					.antMatchers("/logs/**")
-						.hasRole(ROLE_ADMIN.name())
+						.hasRole("ADMIN")
 					.anyRequest()
 						.authenticated();
 	}
