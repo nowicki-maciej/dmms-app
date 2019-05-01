@@ -1,6 +1,6 @@
 package cf.dmms.app.usermanagement.user.principal;
 
-import cf.dmms.app.usermanagement.user.User;
+import cf.dmms.app.spi.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

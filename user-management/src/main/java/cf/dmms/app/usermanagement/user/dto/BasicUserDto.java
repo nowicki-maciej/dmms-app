@@ -1,6 +1,6 @@
 package cf.dmms.app.usermanagement.user.dto;
 
-import cf.dmms.app.usermanagement.user.Role;
+import cf.dmms.app.spi.user.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

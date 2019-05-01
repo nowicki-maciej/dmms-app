@@ -1,4 +1,4 @@
-package cf.dmms.app.core.author;
+package cf.dmms.app.spi;
 
 import javax.persistence.*;
 

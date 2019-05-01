@@ -1,5 +1,6 @@
 package cf.dmms.app.core.book.category;
 
+import cf.dmms.app.spi.Category;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

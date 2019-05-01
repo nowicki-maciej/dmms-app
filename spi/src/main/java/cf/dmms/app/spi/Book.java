@@ -1,7 +1,6 @@
-package cf.dmms.app.core.book;
+package cf.dmms.app.spi;
 
-import cf.dmms.app.core.author.Author;
-import cf.dmms.app.core.book.category.Category;
+import cf.dmms.app.spi.user.User;
 import org.springframework.content.commons.annotations.ContentId;
 
 import javax.persistence.*;
@@ -14,6 +13,10 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private User user;
 
 	@Column(nullable = false)
 	private String title;
@@ -46,12 +49,14 @@ public class Book {
 	}
 
 	public Book(
+			User user,
 			String title,
 			String isbn,
 			String description,
 			Set<Format> formats,
 			Set<Author> authors,
 			Set<Category> categories) {
+		this.user = user;
 		this.title = title;
 		this.isbn = isbn;
 		this.description = description;
@@ -98,5 +103,9 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public User getUser() {
+		return user;
 	}
 }

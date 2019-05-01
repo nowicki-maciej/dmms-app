@@ -2,7 +2,7 @@ package cf.dmms.app.usermanagement.user.dto;
 
 import org.junit.Test;
 
-import static cf.dmms.app.usermanagement.user.Role.ROLE_ADMIN;
+import static cf.dmms.app.spi.user.Role.ROLE_ADMIN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DtoValidationTest extends ValidationTestBase {

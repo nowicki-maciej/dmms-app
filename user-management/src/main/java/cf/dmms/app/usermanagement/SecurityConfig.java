@@ -1,10 +1,10 @@
 package cf.dmms.app.usermanagement;
 
 import cf.dmms.app.usermanagement.security.UnauthorizedHandler;
-import cf.dmms.app.usermanagement.user.Role;
 import cf.dmms.app.usermanagement.user.principal.UserPrincipalService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,8 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-
-import static cf.dmms.app.usermanagement.user.Role.ROLE_ADMIN;
 
 @Configuration
 @EnableWebSecurity
@@ -43,24 +41,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.csrf()
-					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-					.and()
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.and()
 				.logout()
-					.invalidateHttpSession(true)
-					.deleteCookies("JSESSIONID")
-					.logoutUrl("/user-management/logout")
-					.logoutSuccessHandler(logoutSuccessHandler())
-					.and()
+				.invalidateHttpSession(true)
+				.deleteCookies("JSESSIONID")
+				.logoutUrl("/user-management/logout")
+				.logoutSuccessHandler(logoutSuccessHandler())
+				.and()
 				.exceptionHandling()
-					.authenticationEntryPoint(unauthorizedHandler)
-					.and()
+				.authenticationEntryPoint(unauthorizedHandler)
+				.and()
 				.authorizeRequests()
-					.antMatchers("/user-management/login", "/user-test-management/createUser")
-						.permitAll()
-					.antMatchers("/logs/**")
-						.hasRole("ADMIN")
-					.anyRequest()
-						.authenticated();
+				.antMatchers("/user-management/login", "/user-test-management/createUser")
+				.permitAll()
+				.antMatchers(HttpMethod.GET, "/categories")
+				.hasAnyRole("ADMIN", "USER")
+				.antMatchers("/logs/**", "/categories/**")
+				.hasRole("ADMIN")
+				.anyRequest()
+				.authenticated();
 	}
 
 	//changing default spring security behaviour

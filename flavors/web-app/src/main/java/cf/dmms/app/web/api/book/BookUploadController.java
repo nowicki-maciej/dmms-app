@@ -1,8 +1,9 @@
 package cf.dmms.app.web.api.book;
 
-import cf.dmms.app.core.book.Book;
 import cf.dmms.app.core.book.BookService;
-import cf.dmms.app.core.book.MediaType;
+import cf.dmms.app.spi.Book;
+import cf.dmms.app.spi.MediaType;
+import cf.dmms.app.web.resolver.CurrentUserId;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ class BookUploadController {
 
 	@PostMapping
 	public BookDto addBook(
+			@CurrentUserId Long userId,
 			@RequestParam("book") String newBookDtoString,
 			@RequestParam("file[]") List<MultipartFile> files) throws IOException {
 
@@ -50,7 +52,7 @@ class BookUploadController {
 
 		log.debug("Requested book addition.");
 
-		Book book = bookMapper.toEntity(newBookDto);
+		Book book = bookMapper.toEntity(userId, newBookDto);
 		Map<MediaType, byte[]> contentsByTypes = parseContentFiles(files);
 
 		book = bookService.addBook(book, contentsByTypes);

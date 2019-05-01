@@ -1,6 +1,10 @@
 package cf.dmms.app.core.book;
 
 import cf.dmms.app.core.book.storage.BookContentStore;
+import cf.dmms.app.spi.Book;
+import cf.dmms.app.spi.BookFormatAlreadyExistsException;
+import cf.dmms.app.spi.Format;
+import cf.dmms.app.spi.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -28,20 +32,16 @@ public class BookService {
 		this.bookContentStore = bookContentStore;
 	}
 
-	public List<Book> getAllBooks() {
-		return bookRepository.findAll();
+	public List<Book> getAllBooks(Long userId) {
+		return bookRepository.findAllByUserId(userId);
 	}
 
-	public Page<Book> getAllBooks(Pageable pageable) {
-		return bookRepository.findAll(pageable);
+	public Book getBook(Long userId, Long bookId) {
+		return bookRepository.getOneByIdAndUserId(bookId, userId);
 	}
 
-	public Book getBook(Long id) {
-		return bookRepository.getOne(id);
-	}
-
-	public void deleteBookById(Long id) {
-		bookRepository.deleteById(id);
+	public void deleteBookById(Long userId, Long bookId) {
+		bookRepository.deleteByIdAndUserId(bookId, userId);
 	}
 
 	public Book addBook(Book book, Map<MediaType, byte[]> bookFiles) {
