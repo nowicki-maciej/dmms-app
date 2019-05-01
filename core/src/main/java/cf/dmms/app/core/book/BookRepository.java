@@ -1,6 +1,6 @@
 package cf.dmms.app.core.book;
 
-import cf.dmms.app.spi.Book;
+import cf.dmms.app.spi.book.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

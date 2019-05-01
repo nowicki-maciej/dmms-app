@@ -1,8 +1,8 @@
 package cf.dmms.app.web.api.book;
 
 import cf.dmms.app.core.book.BookService;
-import cf.dmms.app.spi.Book;
-import cf.dmms.app.spi.MediaType;
+import cf.dmms.app.spi.book.Book;
+import cf.dmms.app.spi.book.MediaType;
 import cf.dmms.app.web.resolver.CurrentUserId;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;

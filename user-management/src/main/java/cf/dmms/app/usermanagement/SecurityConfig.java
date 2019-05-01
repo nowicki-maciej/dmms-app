@@ -41,26 +41,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.	csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.and()
 				.logout()
-				.invalidateHttpSession(true)
-				.deleteCookies("JSESSIONID")
-				.logoutUrl("/user-management/logout")
-				.logoutSuccessHandler(logoutSuccessHandler())
+					.invalidateHttpSession(true)
+					.deleteCookies("JSESSIONID")
+					.logoutUrl("/user-management/logout")
+					.logoutSuccessHandler(logoutSuccessHandler())
 				.and()
 				.exceptionHandling()
-				.authenticationEntryPoint(unauthorizedHandler)
+					.authenticationEntryPoint(unauthorizedHandler)
 				.and()
 				.authorizeRequests()
-				.antMatchers("/user-management/login", "/user-test-management/createUser")
-				.permitAll()
-				.antMatchers(HttpMethod.GET, "/categories")
-				.hasAnyRole("ADMIN", "USER")
-				.antMatchers("/logs/**", "/categories/**")
-				.hasRole("ADMIN")
-				.anyRequest()
-				.authenticated();
+					.antMatchers("/user-management/login", "/user-test-management/createUser")
+						.permitAll()
+					.antMatchers(HttpMethod.GET, "/categories")
+						.hasAnyRole("ADMIN", "USER")
+					.antMatchers("/logs/**", "/categories/**")
+						.hasRole("ADMIN")
+					.anyRequest()
+						.authenticated();
 	}
 
 	//changing default spring security behaviour

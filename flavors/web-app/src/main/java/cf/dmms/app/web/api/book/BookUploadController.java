@@ -1,14 +1,15 @@
 package cf.dmms.app.web.api.book;
 
 import cf.dmms.app.core.book.BookService;
-import cf.dmms.app.spi.Book;
-import cf.dmms.app.spi.MediaType;
+import cf.dmms.app.spi.book.Book;
+import cf.dmms.app.spi.book.MediaType;
 import cf.dmms.app.web.resolver.CurrentUserId;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,7 @@ import java.util.Set;
 import static java.util.Objects.isNull;
 
 @RestController
+@RequestMapping("/books")
 class BookUploadController {
 
 	private static final Logger log = LoggerFactory.getLogger(BookUploadController.class);

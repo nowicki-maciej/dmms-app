@@ -3,7 +3,7 @@ package cf.dmms.app.web.api.book;
 import cf.dmms.app.core.author.AuthorService;
 import cf.dmms.app.core.book.category.CategoryService;
 import cf.dmms.app.spi.Author;
-import cf.dmms.app.spi.Book;
+import cf.dmms.app.spi.book.Book;
 import cf.dmms.app.spi.Category;
 import cf.dmms.app.usermanagement.user.UserRepository;
 import cf.dmms.app.web.api.author.AuthorMapper;

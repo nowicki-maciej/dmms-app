@@ -1,4 +1,4 @@
-package cf.dmms.app.spi;
+package cf.dmms.app.spi.book;
 
 import java.util.Arrays;
 import java.util.List;

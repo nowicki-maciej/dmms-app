@@ -1,5 +1,7 @@
-package cf.dmms.app.spi;
+package cf.dmms.app.spi.book;
 
+import cf.dmms.app.spi.Author;
+import cf.dmms.app.spi.Category;
 import cf.dmms.app.spi.user.User;
 import org.springframework.content.commons.annotations.ContentId;
 
@@ -15,8 +17,8 @@ public class Book {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id")
-	private User user;
+	@JoinColumn(name="owner_id")
+	private User owner;
 
 	@Column(nullable = false)
 	private String title;
@@ -49,14 +51,14 @@ public class Book {
 	}
 
 	public Book(
-			User user,
+			User owner,
 			String title,
 			String isbn,
 			String description,
 			Set<Format> formats,
 			Set<Author> authors,
 			Set<Category> categories) {
-		this.user = user;
+		this.owner = owner;
 		this.title = title;
 		this.isbn = isbn;
 		this.description = description;
@@ -105,7 +107,7 @@ public class Book {
 		this.description = description;
 	}
 
-	public User getUser() {
-		return user;
+	public User getOwner() {
+		return owner;
 	}
 }

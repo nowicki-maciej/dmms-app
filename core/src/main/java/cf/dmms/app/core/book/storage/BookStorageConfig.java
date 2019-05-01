@@ -1,6 +1,6 @@
 package cf.dmms.app.core.book.storage;
 
-import cf.dmms.app.spi.Format;
+import cf.dmms.app.spi.book.Format;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.content.fs.config.EnableFilesystemStores;
 import org.springframework.content.fs.config.FilesystemStoreConfigurer;

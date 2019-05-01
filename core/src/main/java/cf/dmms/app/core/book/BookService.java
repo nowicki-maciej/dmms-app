@@ -1,14 +1,12 @@
 package cf.dmms.app.core.book;
 
 import cf.dmms.app.core.book.storage.BookContentStore;
-import cf.dmms.app.spi.Book;
-import cf.dmms.app.spi.BookFormatAlreadyExistsException;
-import cf.dmms.app.spi.Format;
-import cf.dmms.app.spi.MediaType;
+import cf.dmms.app.spi.book.Book;
+import cf.dmms.app.spi.book.BookFormatAlreadyExistsException;
+import cf.dmms.app.spi.book.Format;
+import cf.dmms.app.spi.book.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
