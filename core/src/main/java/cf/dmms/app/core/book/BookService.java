@@ -31,15 +31,15 @@ public class BookService {
 	}
 
 	public List<Book> getAllBooks(Long userId) {
-		return bookRepository.findAllByUserId(userId);
+		return bookRepository.findAllByOwnerId(userId);
 	}
 
 	public Book getBook(Long userId, Long bookId) {
-		return bookRepository.getOneByIdAndUserId(bookId, userId);
+		return bookRepository.getOneByIdAndOwnerId(bookId, userId);
 	}
 
 	public void deleteBookById(Long userId, Long bookId) {
-		bookRepository.deleteByIdAndUserId(bookId, userId);
+		bookRepository.deleteByIdAndOwnerId(bookId, userId);
 	}
 
 	public Book addBook(Book book, Map<MediaType, byte[]> bookFiles) {

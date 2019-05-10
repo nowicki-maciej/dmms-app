@@ -1,4 +1,4 @@
-package cf.dmms.app.web.api.book.category;
+package cf.dmms.app.web.api.category;
 
 import cf.dmms.app.core.book.category.CategoryService;
 import cf.dmms.app.spi.Category;

@@ -1,4 +1,4 @@
-package cf.dmms.app.web.api.book.category;
+package cf.dmms.app.web.api.category;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
