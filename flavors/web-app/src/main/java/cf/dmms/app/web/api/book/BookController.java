@@ -51,7 +51,8 @@ class BookController {
 		InputStream bookContent = bookService.getBookContent(book, type);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Disposition", "inline;filename=" + buildFilename(book, type));
+		headers.set("Content-Type", "application/octet-stream");
+		headers.set("Content-Disposition", "attachment; filename=" + buildFilename(book, type));
 		InputStreamResource resource = new InputStreamResource(bookContent);
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
