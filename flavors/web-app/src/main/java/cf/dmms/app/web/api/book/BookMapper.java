@@ -7,7 +7,7 @@ import cf.dmms.app.spi.book.Book;
 import cf.dmms.app.spi.Category;
 import cf.dmms.app.usermanagement.user.UserRepository;
 import cf.dmms.app.web.api.author.AuthorMapper;
-import cf.dmms.app.web.api.book.category.CategoryMapper;
+import cf.dmms.app.web.api.category.CategoryMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -17,7 +17,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toList;
 
 @Component
-class BookMapper {
+public class BookMapper {
 
 	private AuthorService authorService;
 	private CategoryService categoryService;
@@ -44,7 +44,7 @@ class BookMapper {
 		);
 	}
 
-	BookDto toDto(Book book) {
+	public BookDto toDto(Book book) {
 		return new BookDto(
 				book.getId(),
 				book.getTitle(),

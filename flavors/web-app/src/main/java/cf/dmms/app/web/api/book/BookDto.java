@@ -1,11 +1,11 @@
 package cf.dmms.app.web.api.book;
 
 import cf.dmms.app.web.api.author.AuthorDto;
-import cf.dmms.app.web.api.book.category.CategoryDto;
+import cf.dmms.app.web.api.category.CategoryDto;
 
 import java.util.List;
 
-class BookDto {
+public class BookDto {
 
 	private Long id;
 	private String title;
