@@ -4,12 +4,14 @@ import cf.dmms.app.core.book.BookService;
 import cf.dmms.app.spi.book.Book;
 import cf.dmms.app.spi.book.MediaType;
 import cf.dmms.app.web.resolver.CurrentUserId;
+import cf.dmms.app.web.utils.HttpHeadersBuilder;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -56,24 +58,23 @@ class BookController {
 	}
 
 	@GetMapping("/{bookId}/{type}")
-	ResponseEntity downloadBook(@PathVariable Long bookId, @PathVariable MediaType type) {
+	ResponseEntity downloadBook(
+			HttpServletRequest request,
+			@PathVariable Long bookId,
+			@PathVariable MediaType type) {
 		Book book = bookService.getBookUnsecured(bookId);
 
-		InputStream bookContent = bookService.getBookContent(book, type);
+		HttpHeaders headers = HttpHeadersBuilder.responseFor(request)
+				.contentType("application/octet-stream")
+				.attachment(filename(book, type))
+				.build();
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Type", "application/octet-stream");
-		headers.set("Content-Disposition", "attachment; filename=" + buildFilename(book, type));
+		InputStream bookContent = bookService.getBookContent(book, type);
 		InputStreamResource resource = new InputStreamResource(bookContent);
 		return new ResponseEntity<>(resource, headers, HttpStatus.OK);
 	}
 
-	private String buildFilename(Book book, MediaType type) {
-		try {
-			return URLEncoder.encode(book.getTitle(), "UTF-8") + "." + type.getSaveExtension();
-		} catch (UnsupportedEncodingException e) {
-			throw new IllegalStateException(e);
-		}
+	private String filename(Book book, MediaType type) {
+		return book.getTitle() + "." + type.getSaveExtension();
 	}
-
 }
