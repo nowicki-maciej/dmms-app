@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface UserService {
 
+	BasicUserDto findCurrentUser() throws UserNotFoundException;
+
 	BasicUserDto findById(Long id) throws UserNotFoundException;
 
 	List<BasicUserDto> findAllUsers();
