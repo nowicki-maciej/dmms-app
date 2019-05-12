@@ -30,8 +30,7 @@ public class UserController {
 
 	@GetMapping("/current")
 	public ResponseEntity<BasicUserDto> getCurrentUser() {
-		UserPrincipal userPrincipal = currentUser();
-		return ResponseEntity.ok(userService.findById(userPrincipal.getId()));
+		return ResponseEntity.ok(userService.findCurrentUser());
 	}
 
 	@PutMapping("/current")

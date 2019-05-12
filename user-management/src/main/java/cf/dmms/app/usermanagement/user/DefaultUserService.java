@@ -6,7 +6,9 @@ import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
 import cf.dmms.app.usermanagement.user.dto.RegistrationUserDto;
 import cf.dmms.app.usermanagement.user.dto.RoleUpdateUserDto;
 import cf.dmms.app.usermanagement.user.dto.UpdateUserDto;
+import cf.dmms.app.usermanagement.user.principal.UserPrincipal;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,17 @@ public class DefaultUserService implements UserService {
 	public DefaultUserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+	}
+
+	@Override
+	public BasicUserDto findCurrentUser() throws UserNotFoundException {
+		UserPrincipal principal = (UserPrincipal) SecurityContextHolder
+				.getContext()
+				.getAuthentication()
+				.getPrincipal();
+
+		User user = findUserById(principal.getId());
+		return toDto(user);
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
