@@ -2,6 +2,7 @@ package cf.dmms.app.spi.server;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity(name = "servers")
 public class Server {
@@ -68,5 +69,19 @@ public class Server {
 
 	public LocalDate getExpiration() {
 		return expiration;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Server server = (Server) o;
+		return id.equals(server.id) &&
+				assignedId.equals(server.assignedId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, assignedId);
 	}
 }

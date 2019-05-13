@@ -42,8 +42,8 @@ public class SharingService {
 		return outsourceRepository.save(outsource);
 	}
 
-	public List<Outsource> getSharedResources(String login) {
-		return outsourceRepository.findAllByReceiver(login);
+	public List<Outsource> getSharedResources(String receiverLogin) {
+		return outsourceRepository.findAllByReceiver(receiverLogin);
 	}
 
 	public List<Outsource> getSharedResourcesByOwner(User user) {

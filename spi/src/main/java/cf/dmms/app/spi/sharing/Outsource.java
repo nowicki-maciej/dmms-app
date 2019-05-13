@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
 
 @Entity(name = "outsources")
 public class Outsource {
@@ -25,7 +26,8 @@ public class Outsource {
 	@Column(nullable = false)
 	private String receiver;
 
-	@Column(nullable = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "server_id")
 	private Server destination;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "outsource")
@@ -35,7 +37,6 @@ public class Outsource {
 	Outsource() {
 	}
 
-	//TODO: server
 	public Outsource(User owner, String receiver) {
 		this.owner = owner;
 		this.receiver = receiver;
@@ -70,5 +71,12 @@ public class Outsource {
 
 	public Optional<Server> getDestination() {
 		return Optional.ofNullable(destination);
+	}
+
+	public String getDestinationServerIp() {
+		if (nonNull(destination)) {
+			return destination.getIpAddress();
+		}
+		return "Local";
 	}
 }

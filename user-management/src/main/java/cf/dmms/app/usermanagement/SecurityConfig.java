@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.csrf()
-				.	csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+					.ignoringAntMatchers("/servers/**", "/sharing/out/**")
 				.and()
 				.logout()
 					.invalidateHttpSession(true)
@@ -54,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.authorizeRequests()
 					.antMatchers("/user-management/login", "/user-test-management/createUser")
+						.permitAll()
+					//TODO: only for testing purposes, remove this later v
+					.antMatchers("/servers/**", "/sharing/out/**")
 						.permitAll()
 					.antMatchers(HttpMethod.GET, "/categories")
 						.hasAnyRole("ADMIN", "USER")
