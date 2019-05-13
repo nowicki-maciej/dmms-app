@@ -1,11 +1,13 @@
 package cf.dmms.app.spi.sharing;
 
+import cf.dmms.app.spi.server.Server;
 import cf.dmms.app.spi.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 
@@ -23,7 +25,8 @@ public class Outsource {
 	@Column(nullable = false)
 	private String receiver;
 
-	//Server destination
+	@Column(nullable = true)
+	private Server destination;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "outsource")
 	private List<OutResource> sharedResources;
@@ -32,10 +35,17 @@ public class Outsource {
 	Outsource() {
 	}
 
+	//TODO: server
 	public Outsource(User owner, String receiver) {
 		this.owner = owner;
 		this.receiver = receiver;
 		this.sharedResources = emptyList();
+	}
+
+	public Outsource(User owner, String receiver, Server destination) {
+		this.owner = owner;
+		this.receiver = receiver;
+		this.destination = destination;
 	}
 
 	public Long getId() {
@@ -56,5 +66,9 @@ public class Outsource {
 
 	public void setSharedResources(List<OutResource> sharedResources) {
 		this.sharedResources = sharedResources;
+	}
+
+	public Optional<Server> getDestination() {
+		return Optional.ofNullable(destination);
 	}
 }

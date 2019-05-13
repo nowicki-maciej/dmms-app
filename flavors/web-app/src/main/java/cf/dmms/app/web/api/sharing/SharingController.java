@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.HttpStatus.OK;
 
 @Controller
-@RequestMapping("/sharing")
+@RequestMapping("/share/out")
 public class SharingController {
 
 	private UserRepository userRepository;
@@ -36,9 +36,9 @@ public class SharingController {
 
 	@PostMapping
 	public ResponseEntity share(@CurrentUserId Long userId, @Valid @RequestBody SharingRequest sharingRequest) {
-
 		User currentUser = userRepository.getOne(userId);
-		sharingService.share(currentUser, sharingRequest.getReceiver(), sharingRequest.getBooksId());
+		Long receiverServerId = sharingRequest.getReceiverServer().orElse(-1L);
+		sharingService.share(currentUser, sharingRequest.getReceiver(), receiverServerId, sharingRequest.getBooksId());
 
 		return new ResponseEntity(OK);
 	}
