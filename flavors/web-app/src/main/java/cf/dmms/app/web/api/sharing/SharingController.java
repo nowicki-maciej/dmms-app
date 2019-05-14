@@ -7,6 +7,8 @@ import cf.dmms.app.spi.sharing.Outsource;
 import cf.dmms.app.spi.user.User;
 import cf.dmms.app.usermanagement.user.UserRepository;
 import cf.dmms.app.web.resolver.CurrentUserId;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -108,16 +110,19 @@ public class SharingController {
 				.collect(Collectors.toList());
 	}
 
-	private class ResourcesResponseWrapper{
+	public class ResourcesResponseWrapper{
 		private List<SharedResourceDto> sharedResourceDtos;
 
-		ResourcesResponseWrapper(List<SharedResourceDto> sharedResourceDtos) {
+		@JsonCreator
+		public ResourcesResponseWrapper(@JsonProperty("sharedResourceDtos") List<SharedResourceDto> sharedResourceDtos) {
 			this.sharedResourceDtos = sharedResourceDtos;
 		}
 
-		List<SharedResourceDto> getSharedResourceDtos() {
+		public List<SharedResourceDto> getSharedResourceDtos() {
 			return sharedResourceDtos;
 		}
+
+
 	}
 
 
