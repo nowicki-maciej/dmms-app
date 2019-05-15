@@ -2,6 +2,8 @@ package cf.dmms.app.web.api.book;
 
 import cf.dmms.app.web.api.author.AuthorDto;
 import cf.dmms.app.web.api.category.CategoryDto;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -15,14 +17,15 @@ public class BookDto {
 	private List<CategoryDto> categories;
 	private List<String> formats;
 
+	@JsonCreator
 	BookDto(
-			Long id,
-			String title,
-			String isbn,
-			String description,
-			List<AuthorDto> authors,
-			List<CategoryDto> categories,
-			List<String> formats) {
+			@JsonProperty("id") Long id,
+			@JsonProperty("title") String title,
+			@JsonProperty("isbn") String isbn,
+			@JsonProperty("description") String description,
+			@JsonProperty("authors") List<AuthorDto> authors,
+			@JsonProperty("categories") List<CategoryDto> categories,
+			@JsonProperty("formats") List<String> formats) {
 		this.id = id;
 		this.title = title;
 		this.isbn = isbn;

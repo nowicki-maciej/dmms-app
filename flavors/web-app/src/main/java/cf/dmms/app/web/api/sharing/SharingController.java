@@ -109,23 +109,4 @@ public class SharingController {
 				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
 	}
-
-	public class ResourcesResponseWrapper{
-		private List<SharedResourceDto> sharedResourceDtos;
-
-		@JsonCreator
-		public ResourcesResponseWrapper(@JsonProperty("sharedResourceDtos") List<SharedResourceDto> sharedResourceDtos) {
-			this.sharedResourceDtos = sharedResourceDtos;
-		}
-
-		public List<SharedResourceDto> getSharedResourceDtos() {
-			return sharedResourceDtos;
-		}
-
-
-	}
-
-
-
-
 }
