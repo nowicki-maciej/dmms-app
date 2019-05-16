@@ -1,5 +1,6 @@
-package cf.dmms.app.spi.server;
+package cf.dmms.app.core.server;
 
+import cf.dmms.app.spi.server.Server;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

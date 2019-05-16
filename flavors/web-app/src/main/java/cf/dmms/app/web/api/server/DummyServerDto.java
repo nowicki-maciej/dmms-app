@@ -1,5 +1,7 @@
-package cf.dmms.app.spi.server;
+package cf.dmms.app.web.api.server;
 
+import cf.dmms.app.spi.server.Server;
+import cf.dmms.app.spi.server.ServerType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

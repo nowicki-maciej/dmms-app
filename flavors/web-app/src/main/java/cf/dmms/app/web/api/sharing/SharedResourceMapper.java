@@ -1,6 +1,6 @@
 package cf.dmms.app.web.api.sharing;
 
-import cf.dmms.app.spi.sharing.OutResource;
+import cf.dmms.app.spi.sharing.OutboundResource;
 import cf.dmms.app.spi.sharing.Outsource;
 import cf.dmms.app.web.api.book.BookDto;
 import cf.dmms.app.web.api.book.BookMapper;
@@ -23,7 +23,7 @@ public class SharedResourceMapper {
 	public List<SharedResourceDto> toDto(Outsource outsource) {
 		String owner = outsource.getOwner().getLogin();
 		List<BookDto> sharedBooks = outsource.getSharedResources().stream()
-				.map(OutResource::getBook)
+				.map(OutboundResource::getBook)
 				.map(bookMapper::toDto)
 				.collect(Collectors.toList());
 
@@ -37,7 +37,7 @@ public class SharedResourceMapper {
 	public List<SharedOutResourceDto> toOutDto(Outsource outsource) {
 		String receiver = outsource.getReceiver();
 		List<BookDto> sharedBooks = outsource.getSharedResources().stream()
-				.map(OutResource::getBook)
+				.map(OutboundResource::getBook)
 				.map(bookMapper::toDto)
 				.collect(Collectors.toList());
 

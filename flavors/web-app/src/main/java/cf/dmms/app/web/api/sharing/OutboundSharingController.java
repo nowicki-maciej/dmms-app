@@ -2,7 +2,7 @@ package cf.dmms.app.web.api.sharing;
 
 import cf.dmms.app.core.sharing.SharingService;
 import cf.dmms.app.spi.server.Server;
-import cf.dmms.app.spi.server.ServerRepository;
+import cf.dmms.app.core.server.ServerRepository;
 import cf.dmms.app.spi.sharing.Outsource;
 import cf.dmms.app.spi.user.User;
 import cf.dmms.app.usermanagement.user.UserRepository;
@@ -11,27 +11,24 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static cf.dmms.app.spi.server.ServerType.INSOURCE;
 import static cf.dmms.app.spi.server.ServerType.OUTSOURCE;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/sharing")
-public class SharingController {
+@RequestMapping("/sharing/out")
+public class OutboundSharingController {
 
 	private UserRepository userRepository;
 	private SharingService sharingService;
 	private SharedResourceMapper sharedResourceMapper;
 	private ServerRepository serverRepository;
 
-	public SharingController(UserRepository userRepository, SharingService sharingService, SharedResourceMapper sharedResourceMapper, ServerRepository serverRepository) {
+	public OutboundSharingController(UserRepository userRepository, SharingService sharingService, SharedResourceMapper sharedResourceMapper, ServerRepository serverRepository) {
 		this.userRepository = userRepository;
 		this.sharingService = sharingService;
 		this.sharedResourceMapper = sharedResourceMapper;
@@ -59,22 +56,8 @@ public class SharingController {
 		return ResponseEntity.ok(shared);
 	}
 
-	@GetMapping("/in")
-	public ResponseEntity<?> sharedForMe(@CurrentUserId Long userId) {
-		User currentUser = userRepository.getOne(userId);
-		List<Outsource> sharedResources = sharingService.getSharedResources(currentUser.getLogin());
 
-		List<SharedResourceDto> shared = sharedResources.stream()
-				.flatMap(outsource -> sharedResourceMapper.toDto(outsource).stream())
-				.collect(Collectors.toList());
-
-		List<SharedResourceDto> sharedFromOtherServers = getSharedResourcesFromOtherServers(currentUser.getLogin());
-		shared.addAll(sharedFromOtherServers);
-
-		return ResponseEntity.ok(shared);
-	}
-
-	@GetMapping("/out/{serverId}/{userLogin}")
+	@GetMapping("/{serverId}/{userLogin}")
 	public ResponseEntity<?> sharedTo(@PathVariable("serverId") Long serverId, @PathVariable("userLogin") String userLogin) {
 
 		Server outServer = serverRepository.findByAssignedId(serverId)
@@ -93,22 +76,6 @@ public class SharingController {
 		return ResponseEntity.ok(new ResourcesResponseWrapper(shared));
 	}
 
-	private List<SharedResourceDto> getSharedResourcesFromOtherServers(String username) {
-		List<Server> servers = serverRepository.findAll().stream()
-				.filter(server -> server.getType() == INSOURCE)
-				.collect(Collectors.toList());
-
-		RestTemplate restTemplate = new RestTemplate();
-		return servers.stream()
-				.map(server -> restTemplate.getForEntity(
-						server.getIpAddress() + "/api/sharing/out/" + server.getAssignedId() + "/" + username,
-						ResourcesResponseWrapper.class))
-				.filter(response -> response.getStatusCode().is2xxSuccessful())
-				.map(response -> response.getBody())
-				.map(resource -> resource.getSharedResourceDtos())
-				.flatMap(Collection::stream)
-				.collect(Collectors.toList());
-	}
 
 	public class ResourcesResponseWrapper{
 		private List<SharedResourceDto> sharedResourceDtos;

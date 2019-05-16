@@ -5,11 +5,7 @@ import cf.dmms.app.web.api.book.BookDto;
 public class SharedOutResourceDto {
 
 	private String receiver;
-
-	//Server destination
-
 	private BookDto book;
-
 	private String server;
 
 	public SharedOutResourceDto(String receiver, BookDto book, String server) {

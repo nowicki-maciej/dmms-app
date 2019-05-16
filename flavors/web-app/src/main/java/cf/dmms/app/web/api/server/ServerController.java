@@ -1,8 +1,7 @@
 package cf.dmms.app.web.api.server;
 
-import cf.dmms.app.spi.server.DummyServerDto;
 import cf.dmms.app.spi.server.Server;
-import cf.dmms.app.spi.server.ServerRepository;
+import cf.dmms.app.core.server.ServerRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

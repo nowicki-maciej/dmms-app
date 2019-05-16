@@ -4,8 +4,6 @@ import cf.dmms.app.spi.server.Server;
 import cf.dmms.app.spi.user.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +29,7 @@ public class Outsource {
 	private Server destination;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "outsource")
-	private List<OutResource> sharedResources;
+	private List<OutboundResource> sharedResources;
 
 	@Deprecated
 	Outsource() {
@@ -61,11 +59,11 @@ public class Outsource {
 		return receiver;
 	}
 
-	public List<OutResource> getSharedResources() {
+	public List<OutboundResource> getSharedResources() {
 		return sharedResources;
 	}
 
-	public void setSharedResources(List<OutResource> sharedResources) {
+	public void setSharedResources(List<OutboundResource> sharedResources) {
 		this.sharedResources = sharedResources;
 	}
 

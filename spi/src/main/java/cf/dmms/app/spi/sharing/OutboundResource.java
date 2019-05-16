@@ -5,8 +5,8 @@ import cf.dmms.app.spi.book.Book;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Entity(name = "out_resources")
-public class OutResource {
+@Entity(name = "outbound_resources")
+public class OutboundResource {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,10 @@ public class OutResource {
 
 	//LocalDateTime expiration
 
-	@Deprecated
-	OutResource() {
+	@Deprecated OutboundResource() {
 	}
 
-	public OutResource(Book book, Outsource outsource) {
+	public OutboundResource(Book book, Outsource outsource) {
 		this.resourceId = UUID.randomUUID().toString();
 		this.book = book;
 		this.outsource = outsource;

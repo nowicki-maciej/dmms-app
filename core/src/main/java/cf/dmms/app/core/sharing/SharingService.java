@@ -2,11 +2,9 @@ package cf.dmms.app.core.sharing;
 
 import cf.dmms.app.core.book.BookRepository;
 import cf.dmms.app.spi.server.Server;
-import cf.dmms.app.spi.server.ServerRepository;
-import cf.dmms.app.spi.server.ServerType;
-import cf.dmms.app.spi.sharing.OutResource;
+import cf.dmms.app.core.server.ServerRepository;
+import cf.dmms.app.spi.sharing.OutboundResource;
 import cf.dmms.app.spi.sharing.Outsource;
-import cf.dmms.app.spi.sharing.OutsourceRepository;
 import cf.dmms.app.spi.user.User;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +31,9 @@ public class SharingService {
 	public Outsource share(User owner, String receiver, Long receiverServerId, List<Long> booksId) {
 		Outsource outsource = createOutsource(owner, receiver, receiverServerId);
 
-		List<OutResource> shared = booksId.stream()
+		List<OutboundResource> shared = booksId.stream()
 				.map(bookId -> bookRepository.getOneByIdAndOwnerId(bookId, owner.getId()))
-				.map(book -> new OutResource(book, outsource))
+				.map(book -> new OutboundResource(book, outsource))
 				.collect(Collectors.toList());
 
 		outsource.setSharedResources(shared);
