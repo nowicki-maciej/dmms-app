@@ -11,8 +11,12 @@ public class DummyServerDto {
 
 	@JsonCreator
 	public DummyServerDto(@JsonProperty("ipAddress") String ipAddress,
-						  @JsonProperty("assignedId") Long assignedId,
 						  @JsonProperty("serverType") ServerType serverType) {
+		this.ipAddress = ipAddress;
+		this.serverType = serverType;
+	}
+
+	public DummyServerDto(String ipAddress, Long assignedId, ServerType serverType) {
 		this.ipAddress = ipAddress;
 		this.assignedId = assignedId;
 		this.serverType = serverType;
@@ -28,6 +32,10 @@ public class DummyServerDto {
 
 	public ServerType getServerType() {
 		return serverType;
+	}
+
+	public void setAssignedId(Long assignedId) {
+		this.assignedId = assignedId;
 	}
 
 	public Server toEntity() {

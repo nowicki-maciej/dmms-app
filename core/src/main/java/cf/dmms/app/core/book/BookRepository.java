@@ -14,4 +14,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	Book getOneByIdAndOwnerId(Long id, Long ownerId);
 
 	void deleteByIdAndOwnerId(Long id, Long ownerId);
+
+	Book getBookById(Long id);
 }

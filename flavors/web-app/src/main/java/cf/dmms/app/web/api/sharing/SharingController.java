@@ -9,6 +9,7 @@ import cf.dmms.app.usermanagement.user.UserRepository;
 import cf.dmms.app.web.resolver.CurrentUserId;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static cf.dmms.app.spi.server.ServerType.INSOURCE;
@@ -79,6 +81,7 @@ public class SharingController {
 
 		Server outServer = serverRepository.findByAssignedId(serverId)
 				.filter(s -> s.getType() == OUTSOURCE)
+				.filter(this::isServerAccepted)
 				.orElseThrow(() -> new IllegalStateException("No server found with given Id"));
 
 		List<Outsource> sharedResources = sharingService.getSharedResources(userLogin).stream()
@@ -93,6 +96,10 @@ public class SharingController {
 		return ResponseEntity.ok(new ResourcesResponseWrapper(shared));
 	}
 
+	private boolean isServerAccepted(Server s) {
+		return "ACCEPTED".equals(s.getToken());
+	}
+
 	private List<SharedResourceDto> getSharedResourcesFromOtherServers(String username) {
 		List<Server> servers = serverRepository.findAll().stream()
 				.filter(server -> server.getType() == INSOURCE)
@@ -104,8 +111,9 @@ public class SharingController {
 						server.getIpAddress() + "/api/sharing/out/" + server.getAssignedId() + "/" + username,
 						ResourcesResponseWrapper.class))
 				.filter(response -> response.getStatusCode().is2xxSuccessful())
-				.map(response -> response.getBody())
-				.map(resource -> resource.getSharedResourceDtos())
+				.map(HttpEntity::getBody)
+				.filter(Objects::nonNull)
+				.map(ResourcesResponseWrapper::getSharedResourceDtos)
 				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
 	}

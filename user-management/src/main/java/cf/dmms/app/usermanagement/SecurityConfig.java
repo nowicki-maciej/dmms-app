@@ -57,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/user-management/login", "/user-test-management/createUser")
 						.permitAll()
 					//TODO: only for testing purposes, remove this later v
+					.antMatchers("/books/**")
+						.permitAll()
 					.antMatchers("/servers/**", "/sharing/out/**")
 						.permitAll()
 					.antMatchers(HttpMethod.GET, "/categories")

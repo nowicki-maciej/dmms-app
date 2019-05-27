@@ -38,6 +38,10 @@ public class BookService {
 		return bookRepository.getOneByIdAndOwnerId(bookId, userId);
 	}
 
+	public Book getBookUnsecured(Long bookId) {
+		return bookRepository.getBookById(bookId);
+	}
+
 	public void deleteBookById(Long userId, Long bookId) {
 		bookRepository.deleteByIdAndOwnerId(bookId, userId);
 	}

@@ -33,7 +33,7 @@ public class Server {
 	public Server() {
 	}
 
-	public Server(String ipAddress, Long assignedId, ServerType type) {
+	Server(String ipAddress, Long assignedId, ServerType type) {
 		this.ipAddress = ipAddress;
 		this.assignedId = assignedId;
 		this.type = type;
@@ -61,6 +61,10 @@ public class Server {
 
 	public ServerType getType() {
 		return type;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public String getToken() {
