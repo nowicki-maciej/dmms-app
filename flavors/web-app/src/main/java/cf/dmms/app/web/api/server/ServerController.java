@@ -40,7 +40,9 @@ public class ServerController {
 		if(!response.getStatusCode().is2xxSuccessful()) {
 			throw new IllegalStateException("Server unavailable!");
 		}
-		serverRepository.save(serverDto.toEntity());
+		Server server = serverDto.toEntity();
+		server.setToken("ACCEPTED");
+		serverRepository.save(server);
 
 		return new ResponseEntity(HttpStatus.OK);
 	}
