@@ -25,7 +25,7 @@ public class ServerController {
 
 	public ServerController(ServerRepository serverRepository) {
 		this.serverRepository = serverRepository;
-		Random random = new Random();
+		random = new Random();
 		restTemplate = new RestTemplate();
 	}
 
