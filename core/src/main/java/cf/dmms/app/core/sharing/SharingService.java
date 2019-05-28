@@ -30,8 +30,8 @@ public class SharingService {
 		this.serverRepository = serverRepository;
 	}
 
-	public Outsource share(User owner, String receiver, Long receiverServerId, List<Long> booksId) {
-		Outsource outsource = createOutsource(owner, receiver, receiverServerId);
+	public Outsource share(User owner, String receiver, Long assignedId, List<Long> booksId) {
+		Outsource outsource = createOutsource(owner, receiver, assignedId);
 
 		List<OutResource> shared = booksId.stream()
 				.map(bookId -> bookRepository.getOneByIdAndOwnerId(bookId, owner.getId()))
@@ -50,11 +50,11 @@ public class SharingService {
 		return outsourceRepository.findAllByOwner(user);
 	}
 
-	private Outsource createOutsource(User owner, String receiver, Long receiverServerId){
-		if (receiverServerId.equals(LOCALHOST_ID)) {
+	private Outsource createOutsource(User owner, String receiver, Long assignedId){
+		if (assignedId.equals(LOCALHOST_ID)) {
 			return new Outsource(owner, receiver);
 		}
-		Server server = serverRepository.findById(receiverServerId)
+		Server server = serverRepository.findByAssignedId(assignedId)
 				.filter(s -> s.getType() == OUTSOURCE)
 				.orElseThrow(() -> new IllegalArgumentException("Not found server with given Id"));
 
