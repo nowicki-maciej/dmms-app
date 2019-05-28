@@ -6,6 +6,7 @@ import cf.dmms.app.spi.server.ServerRepository;
 import cf.dmms.app.spi.server.ServerType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 //TODO: fix, add server service
 @RestController
 @RequestMapping("/servers")
+@Transactional
 public class ServerController {
 
 	private ServerRepository serverRepository;
