@@ -81,4 +81,20 @@ public class BookService {
 		book.getFormats().add(format);
 		log.info("Adding book format {} with storage token {}", format.getFormat(), format.getStorageToken());
 	}
+
+	public Book updateBook(Long userId, Long bookId, Book updateEntity) {
+		Book book = bookRepository.getOneByIdAndOwnerId(bookId, userId);
+
+		book.setTitle(updateEntity.getTitle());
+		book.setDescription(updateEntity.getDescription());
+		book.setIsbn(updateEntity.getIsbn());
+
+		book.getAuthors().clear();
+		book.getAuthors().addAll(updateEntity.getAuthors());
+
+		book.getCategories().clear();
+		book.getCategories().addAll(updateEntity.getCategories());
+
+		return book;
+	}
 }

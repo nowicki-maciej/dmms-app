@@ -44,6 +44,17 @@ class BookController {
 		bookService.deleteBookById(userId, bookId);
 	}
 
+	@PutMapping("/{bookId}")
+	public BookDto updateBook(
+			@CurrentUserId Long userId,
+			@PathVariable Long bookId,
+			@RequestBody NewBookDto bookDto) {
+		Book book = bookMapper.toEntity(userId, bookDto);
+
+		Book updatedBook = bookService.updateBook(userId, bookId, book);
+		return bookMapper.toDto(updatedBook);
+	}
+
 	@GetMapping("/{bookId}/{type}")
 	ResponseEntity downloadBook(@PathVariable Long bookId, @PathVariable MediaType type) {
 		Book book = bookService.getBookUnsecured(bookId);
