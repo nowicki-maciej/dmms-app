@@ -37,8 +37,8 @@ public class ServerController {
 		serverDto.setAssignedId((long) id);
 
 		DummyServerDto request = new DummyServerDto(getServerIpAddress(), (long) id,ServerType.OUTSOURCE);
-		ResponseEntity<?> response = restTemplate
-				.postForEntity(serverDto.getIpAddress() + "/api/servers/request", request, ResponseEntity.class);
+		ResponseEntity<String> response = restTemplate
+				.postForEntity(serverDto.getIpAddress() + "/api/servers/request", request, String.class);
 		if(!response.getStatusCode().is2xxSuccessful()) {
 			throw new IllegalStateException("Server unavailable!");
 		}
