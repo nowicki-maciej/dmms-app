@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 				.csrf()
 					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-					.ignoringAntMatchers("/servers/**", "/sharing/out/**")
+					.ignoringAntMatchers("/servers/**", "/sharing/out/**", "/books/**")
 				.and()
 				.logout()
 					.invalidateHttpSession(true)

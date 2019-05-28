@@ -8,6 +8,7 @@ public class DummyServerDto {
 	private String ipAddress;
 	private Long assignedId;
 	private ServerType serverType;
+	private boolean isAccepted;
 
 	@JsonCreator
 	public DummyServerDto(@JsonProperty("ipAddress") String ipAddress,
@@ -40,5 +41,13 @@ public class DummyServerDto {
 
 	public Server toEntity() {
 		return new Server(ipAddress, assignedId, serverType);
+	}
+
+	public boolean isAccepted() {
+		return isAccepted;
+	}
+
+	public void setAccepted(boolean accepted) {
+		isAccepted = accepted;
 	}
 }

@@ -81,7 +81,9 @@ public class ServerController {
 
 	//TODO: extract to mapper
 	private DummyServerDto mapToDto(Server server) {
-		return new DummyServerDto(server.getIpAddress(), server.getAssignedId(), server.getType());
+		DummyServerDto dummyServerDto = new DummyServerDto(server.getIpAddress(), server.getAssignedId(), server.getType());
+		dummyServerDto.setAccepted("ACCEPTED".equals(server.getToken()));
+		return dummyServerDto;
 	}
 
 }
