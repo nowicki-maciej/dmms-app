@@ -10,6 +10,7 @@ import cf.dmms.app.spi.sharing.OutsourceRepository;
 import cf.dmms.app.spi.user.User;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,10 @@ public class SharingService {
 
 	public List<Outsource> getSharedResources(String receiverLogin) {
 		return outsourceRepository.findAllByReceiver(receiverLogin);
+	}
+
+	public List<Outsource> getSharedResourcesForEveryone() {
+		return outsourceRepository.findAllByReceiver("ALL");
 	}
 
 	public List<Outsource> getSharedResourcesByOwner(User user) {
