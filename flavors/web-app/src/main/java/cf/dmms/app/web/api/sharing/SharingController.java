@@ -69,6 +69,8 @@ public class SharingController {
 
 		List<SharedResourceDto> shared = sharedResources.stream()
 				.flatMap(outsource -> sharedResourceMapper.toDto(outsource).stream())
+				.filter(sharedResourceDto -> !sharedResourceDto.getOwner().equals(currentUser.getLogin()))
+				.filter(sharedResourceDto -> sharedResourceDto.getServer().equals("ALL") || sharedResourceDto.getServer().equals("local"))
 				.collect(Collectors.toList());
 
 		List<SharedResourceDto> sharedFromOtherServers = getSharedResourcesFromOtherServers(currentUser.getLogin());

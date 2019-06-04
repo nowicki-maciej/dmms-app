@@ -44,7 +44,10 @@ public class SharingService {
 	}
 
 	public List<Outsource> getSharedResources(String receiverLogin) {
-		return outsourceRepository.findAllByReceiver(receiverLogin);
+		List<Outsource> outsources = new ArrayList<>();
+		outsources.addAll(outsourceRepository.findAllByReceiver(receiverLogin));
+		outsources.addAll(outsourceRepository.findAllByReceiver("ALL"));
+		return outsources;
 	}
 
 	public List<Outsource> getSharedResourcesForEveryone() {
