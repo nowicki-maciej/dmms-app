@@ -13,6 +13,8 @@ public class SharedResourceDto {
 	private BookDto book;
 	private String server;
 
+	private String localServerIp;
+
 	@JsonCreator
 	public SharedResourceDto(
 			@JsonProperty("owner") String owner,
@@ -33,5 +35,13 @@ public class SharedResourceDto {
 
 	public String getServer() {
 		return server;
+	}
+
+	public String getLocalServerIp() {
+		return localServerIp;
+	}
+
+	public void setLocalServerIp(String localServerIp) {
+		this.localServerIp = localServerIp;
 	}
 }

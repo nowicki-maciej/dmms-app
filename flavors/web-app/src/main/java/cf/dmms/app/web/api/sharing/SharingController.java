@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -68,6 +69,8 @@ public class SharingController {
 
 		List<SharedResourceDto> shared = sharedResources.stream()
 				.flatMap(outsource -> sharedResourceMapper.toDto(outsource).stream())
+				.filter(sharedResourceDto -> !sharedResourceDto.getOwner().equals(currentUser.getLogin()))
+				.filter(sharedResourceDto -> sharedResourceDto.getServer().equals("ALL") || sharedResourceDto.getServer().equals("local"))
 				.collect(Collectors.toList());
 
 		List<SharedResourceDto> sharedFromOtherServers = getSharedResourcesFromOtherServers(currentUser.getLogin());
@@ -89,11 +92,20 @@ public class SharingController {
 				.filter(outsource -> outsource.getDestination().get().equals(outServer))
 				.collect(Collectors.toList());
 
+		List<SharedResourceDto> sharedForEveryone = sharingService.getSharedResourcesForEveryone().stream()
+				.filter(outsource -> sharedForServerOrForEveryone(outsource, outServer))
+				.flatMap(outsource -> sharedResourceMapper.toDto(outsource).stream())
+				.collect(Collectors.toList());
+
 		List<SharedResourceDto> shared = sharedResources.stream()
 				.flatMap(outsource -> sharedResourceMapper.toDto(outsource).stream())
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(new ResourcesResponseWrapper(shared));
+		List<SharedResourceDto> out = new ArrayList<>();
+		out.addAll(sharedForEveryone);
+		out.addAll(shared);
+
+		return ResponseEntity.ok(new ResourcesResponseWrapper(out));
 	}
 
 	private boolean isServerAccepted(Server s) {
@@ -116,5 +128,13 @@ public class SharingController {
 				.map(ResourcesResponseWrapper::getSharedResourceDtos)
 				.flatMap(Collection::stream)
 				.collect(Collectors.toList());
+	}
+
+	private boolean sharedForServerOrForEveryone(Outsource outsource, Server destiantion) {
+		if(outsource.getDestination().isPresent()) {
+			return outsource.getDestination().get().getIpAddress().equals("ALL") ||
+					outsource.getDestination().get().equals(destiantion);
+		}
+		return false;
 	}
 }
