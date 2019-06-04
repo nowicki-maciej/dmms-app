@@ -89,12 +89,6 @@ public class BookService {
 		book.setDescription(updateEntity.getDescription());
 		book.setIsbn(updateEntity.getIsbn());
 
-		book.getAuthors().clear();
-		book.getAuthors().addAll(updateEntity.getAuthors());
-
-		book.getCategories().clear();
-		book.getCategories().addAll(updateEntity.getCategories());
-
 		return book;
 	}
 }
