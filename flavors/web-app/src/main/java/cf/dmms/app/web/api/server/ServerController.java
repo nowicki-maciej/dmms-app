@@ -15,7 +15,7 @@ import java.net.InetAddress;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-//TODO: fix, add server service
+//TODO: add server service
 @RestController
 @RequestMapping("/servers")
 @Transactional
@@ -60,7 +60,7 @@ public class ServerController {
 		return ResponseEntity.ok(serverDto.getAssignedId());
 	}
 
-	@GetMapping("/{id}/accept")
+	@PostMapping("/{id}/accept")
 	public ResponseEntity acceptServer(@PathVariable long id){
 		Server server = serverRepository.findByAssignedId(id).orElseThrow(() -> new IllegalStateException("Server not found!"));
 		server.setToken("ACCEPTED");
@@ -68,7 +68,7 @@ public class ServerController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}/reject")
+	@PostMapping("/{id}/reject")
 	public ResponseEntity rejectServer(@PathVariable long id){
 		serverRepository.deleteByAssignedId(id);
 		return new ResponseEntity(HttpStatus.OK);
