@@ -24,8 +24,8 @@ spring.jpa.database-platform=
 book.storage.dir=
 logsDirPath=
 ```
-`logsDirPath` - directory where app logs are stored e.g. `/opt/dmms/web-app/logs`
-`book.storage.dir` - directory where book files are stored e.g. `/opt/dmms/web-app/storage`
+* `logsDirPath` - directory where app logs are stored e.g. `/opt/dmms/web-app/logs`
+* `book.storage.dir` - directory where book files are stored e.g. `/opt/dmms/web-app/storage`
 
 We highly recommend to use ansible to deploy this application (more information in `dmms-ansible` repository.)
 
