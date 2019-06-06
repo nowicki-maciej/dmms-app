@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 					.antMatchers("/user-management/login", "/user-test-management/createUser")
 						.permitAll()
-					//TODO: only for testing purposes, remove this later v
 					.antMatchers("/books/**")
 						.permitAll()
 					.antMatchers("/servers/**", "/sharing/out/**")

@@ -17,7 +17,6 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.OK;
 
-//TODO: Add basic mockMvc tests
 @RestController
 @RequestMapping("/users")
 public class UserController {
