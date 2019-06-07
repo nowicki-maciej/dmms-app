@@ -7,7 +7,7 @@ Main functions of this system:
 * Sharing books with other users - also from different DMMS servers
 
 ## Installation
-To build this app maven is required.
+To build this app maven is required. You will also need MySQL database.
 
 **Required properties:**
 ```yaml
