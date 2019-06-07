@@ -30,10 +30,12 @@ public class Server {
 	@Column
 	private LocalDate expiration;
 
-	public Server() {
+	@Deprecated
+	Server() {
+
 	}
 
-	Server(String ipAddress, Long assignedId, ServerType type) {
+	public Server(String ipAddress, Long assignedId, ServerType type) {
 		this.ipAddress = ipAddress;
 		this.assignedId = assignedId;
 		this.type = type;

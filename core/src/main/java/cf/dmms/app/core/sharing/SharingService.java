@@ -19,7 +19,8 @@ import static cf.dmms.app.spi.server.ServerType.OUTSOURCE;
 @Service
 public class SharingService {
 
-	private static final Long LOCALHOST_ID = -1L;
+	private static final Long LOCALHOST_ID = 0L;
+	private static final Long ALL_ID = -1L;
 
 	private OutsourceRepository outsourceRepository;
 	private BookRepository bookRepository;
