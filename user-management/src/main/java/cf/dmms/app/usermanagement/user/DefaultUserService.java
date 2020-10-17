@@ -1,5 +1,6 @@
 package cf.dmms.app.usermanagement.user;
 
+import cf.dmms.app.spi.user.Role;
 import cf.dmms.app.spi.user.User;
 import cf.dmms.app.usermanagement.api.exception.UserNotFoundException;
 import cf.dmms.app.usermanagement.user.dto.BasicUserDto;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -102,6 +104,22 @@ public class DefaultUserService implements UserService {
 	private User findUserById(Long id) {
 		return userRepository.findById(id)
 				.orElseThrow(UserNotFoundException::new);
+	}
+
+	@PostConstruct
+	public void initUser() {
+		if (!userRepository.findByLogin("admin").isPresent()) {
+			RegistrationUserDto registrationUserDto = new RegistrationUserDto(
+					"admin",
+					"admin",
+					"admin",
+					"Administrator",
+					"admin@example.com",
+					Role.ROLE_ADMIN
+			);
+			User user = UserMapper.toEntity(registrationUserDto, passwordEncoder);
+			userRepository.save(user);
+		}
 	}
 
 	private boolean verifyPasswords(String textPassword, String encodedPassword) {
